@@ -85,6 +85,7 @@ blogBtns = '''<a class="home" href="index.html">HOME</a>
 
 '''
 
+shutil.copy('pfp.png', 'docs/pfp.png')
 shutil.copy('css/blog.css', 'docs/blog.css')
 shutil.copy('css/index.css', 'docs/index.css')
 shutil.copy('js/highlight.min.js', 'docs/highlight.min.js')
