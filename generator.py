@@ -52,7 +52,7 @@ indexHTML = [
     <label class="switch">THEME<input class="switch__input" type="submit" data-theme-toggle></label>
     <hr>
     <div class="profile">
-        <img src="../pfp.png"
+        <img src="pfp.png"
             width="150" height="150" style="float:left; margin-right: 15px; margin-top: 5px;">
         <p>''',profile["description"],'''</p>
     </div>
