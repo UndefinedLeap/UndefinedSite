@@ -1,6 +1,7 @@
 import json
 import os
 from subprocess import Popen, PIPE
+import shutil
 
 profile = {}
 blogs = []
@@ -44,7 +45,7 @@ if(profile["mail"] != ""):
 
 indexHTML = [
     '''<!DOCTYPE html><html><head><meta charset="utf-8">
-    <link rel="stylesheet" href="../css/index.css"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="index.css"><meta name="viewport" content="width=device-width, initial-scale=1">
     <title>''', profile["name"], '''</title></head>
     <body>
     <h1 style="display: inline-block; padding-right: 20px;">''', profile["name"], '''</h1>
@@ -84,6 +85,10 @@ blogBtns = '''<a class="home" href="index.html">HOME</a>
 
 '''
 
+shutil.copy('css/blog.css', 'docs/blog.css')
+shutil.copy('css/index.css', 'docs/index.css')
+shutil.copy('js/highlight.min.js', 'docs/highlight.min.js')
+
 def createBlogs():
     with os.scandir('blogs/') as entries:
         for entry in entries:
@@ -92,7 +97,7 @@ def createBlogs():
                 blogContents.append(blogBtns)
                 with open('blogs/'+entry.name, 'r') as file:
                     blogContents.append(''.join(file.readlines()))
-                blogContents.append('\n<script src="../js/highlight.min.js"></script><script>hljs.highlightAll();</script>')
+                blogContents.append('\n<script src="highlight.min.js"></script><script>hljs.highlightAll();</script>')
                 blogContents.append(js)
                 with open('docs/'+entry.name, 'w') as file:
                     file.writelines(blogContents)
@@ -101,7 +106,10 @@ def createBlogs():
 
 def md_to_html(entry):
     process = Popen([
-            'css/../pandoc', '--metadata', 'title='+profile["name"],'-s', '--no-highlight', '-c', '../css/blog.css', 
+            'css/../pandoc', 
+            '--metadata', 'title='+profile["name"],
+            '-s', '--no-highlight', 
+            '-c', 'blog.css', 
             'docs/'+entry, 
             '-o', 'docs/'+entry[:-3]+'.html'
         ], stdout=PIPE, stderr=PIPE)

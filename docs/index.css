@@ -1,0 +1,101 @@
+:root {  
+	--dark-bg: rgb(29, 30, 32);
+	--dark-accent: rgb(48, 48, 53);
+	--dark-accent-2: rgba(226, 226, 226, 0.9);
+
+	--light-bg: rgb(255, 255, 255);
+	--light-accent: rgba(233, 233, 233, 0.8);
+	--light-accent-2: rgb(41, 41, 41);
+}
+
+html {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+body{
+    margin: 0%;
+	margin-left: 15%;
+	margin-right: 15%;
+    background-color: var(--dark-bg);
+}
+
+@media (max-width : 480px) {
+	body{
+        margin-left: 5%;
+        margin-right: 5%;
+	}
+}
+
+.profile {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+h1,h2,h3,h4,h5{
+    color: var(--dark-accent-2);
+}
+
+p{
+    font-size: 120%;
+    line-height: 1.3;
+    color: var(--dark-accent-2);
+}
+
+hr{
+    border: 2px solid;
+    color: var(--dark-accent);
+}
+
+svg{
+    stroke: var(--dark-accent-2);
+}
+
+.project ul{
+    color: var(--dark-accent-2);
+    list-style: none;
+    margin: 10px;
+    padding: 0px;
+    font-size: 110%;
+}
+
+.project ul li{
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.project a{
+    color: var(--dark-accent-2);
+    display: block;
+    text-decoration: none;
+    background-color: var(--dark-accent);
+}
+
+.contact a{
+    display: inline-block;
+    padding: 10px;
+}
+
+.switch {
+	font-weight: bold;
+	display: inline-block;
+	color: var(--dark-accent-2);
+	background-color: var(--dark-accent);
+	text-align: center;
+	padding-left: 15px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.switch:hover {
+	cursor: pointer;
+}
+
+.switch__input {  
+	opacity: 0;  
+	width: 0;  
+	height: 0;  
+}
