@@ -1,13 +1,13 @@
 {
-    "name": "Some Name",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempor commodo ullamcorper a lacus. Laoreet non curabitur gravida arcu ac tortor dignissim convallis. Ac orci phasellus egestas tellus. Mattis nunc sed blandit libero volutpat sed cras. Facilisi etiam dignissim diam quis. Amet massa vitae tortor condimentum lacinia quis vel eros. Nam aliquam sem et tortor. Curabitur gravida arcu ac tortor",
+    "name": "URJASVI SUTHAR",
+    "description": "Welcome! This is where I post my understanding and findings in CS world. <br> The topics you will find here are of computer graphics and low-level programming. <br> If you think my works can be improved anyway, then feel free to reach out through my contacts.",
     "blogs": [
         {
-            "name": "Test blog",
-            "link": "test.html"
+            "name": "How computers work: Adder",
+            "link": "HCW1.html"
         }
     ],
-    "github": "lalala",
-    "twitter": "lalala",
-    "mail": "lalala"
+    "github": "https://github.com/BlackGoku36",
+    "twitter": "https://twitter.com/UrjasviS",
+    "mail": "urjasvisuthar@gmail.com"
 }

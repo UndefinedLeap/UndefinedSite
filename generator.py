@@ -41,7 +41,7 @@ if(profile["github"] != ""):
 if(profile["twitter"] != ""):
     contacts.append("<a href='"+profile["twitter"]+"'>"+twitterSVG+"</a>")
 if(profile["mail"] != ""):
-    contacts.append("<a href='"+profile["mail"]+"'>"+mailSVG+"</a>")
+    contacts.append("<a href='mailto: "+profile["mail"]+"'>"+mailSVG+"</a>")
 
 indexHTML = [
     '''<!DOCTYPE html><html><head><meta charset="utf-8">
@@ -55,8 +55,10 @@ indexHTML = [
         <img src="pfp.png"
             width="150" height="150" style="float:left; margin-right: 15px; margin-top: 5px;">
         <p>''',profile["description"],'''</p>
+        <br>
     </div>
-    <br><br><h2>BLOGS</h2><hr>
+    <br><br><br>
+    <h2>BLOGS</h2><hr>
     <div class="project">
         <ul>''', ''.join(blogs), '''</ul>
     </div>
