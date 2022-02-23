@@ -2,6 +2,13 @@ import json
 import os
 from subprocess import Popen, PIPE
 import shutil
+import sys
+
+path_to_pandoc = 'pandoc'
+try:
+    path_to_pandoc = sys.argv[1]
+except:
+    print('Trying installed pandoc at PATH')
 
 profile = {}
 blogs = []
@@ -36,18 +43,37 @@ for blog in profile["blogs"]:
     link = blog["link"]
     blogs.append("<a href='"+link+"'> <li>"+name+"</li></a>")
 
-if(profile["github"] != ""):
+try:
     contacts.append("<a href='"+profile["github"]+"'>"+githubSVG+"</a>")
-if(profile["twitter"] != ""):
+except:
+    print("-> Github account skipped")
+
+try:
     contacts.append("<a href='"+profile["twitter"]+"'>"+twitterSVG+"</a>")
-if(profile["mail"] != ""):
+except:
+    print("-> Twitter account skipped")
+
+try:
     contacts.append("<a href='mailto: "+profile["mail"]+"'>"+mailSVG+"</a>")
+except:
+    print("-> Mail skipped")
+
+contact = ""
+if(len(contacts)!=0):
+    contact = '<br><h2>CONTACTS</h2><hr><div class="contact">'+''.join(contacts) + '</div>'
+
+copyright = ""
+try:
+    copyright = "<footer>"+profile["copyright"]+"</footer>"
+except:
+    print("-> copyright skipped")
 
 indexHTML = [
     '''<!DOCTYPE html><html><head><meta charset="utf-8">
     <link rel="stylesheet" href="index.css"><meta name="viewport" content="width=device-width, initial-scale=1">
     <title>''', profile["name"], '''</title></head>
     <body>
+    <div class="contents">
     <h1 style="display: inline-block; padding-right: 20px;">''', profile["name"], '''</h1>
     <label class="switch">THEME<input class="switch__input" type="submit" data-theme-toggle></label>
     <hr>
@@ -61,11 +87,12 @@ indexHTML = [
     <h2>BLOGS</h2><hr>
     <div class="project">
         <ul>''', ''.join(blogs), '''</ul>
-    </div>
-    <br><h2>CONTACTS</h2><hr>
-    <div class="contact">''', ''.join(contacts), '''</div>
-    ''',js,'''
-    </body></html>
+    </div>''', 
+    contact, 
+    '''</div>''', 
+    copyright, js,'''
+    </body>
+    </html>
     '''
 ]
 
@@ -109,7 +136,7 @@ def createBlogs():
 
 def md_to_html(entry):
     process = Popen([
-            'css/../pandoc', 
+            path_to_pandoc, 
             '--metadata', 'title='+profile["name"],
             '-s', '--no-highlight', 
             '-c', 'blog.css', 

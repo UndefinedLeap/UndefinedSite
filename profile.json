@@ -3,11 +3,24 @@
     "description": "Welcome! This is where I post my understanding and findings in CS world. <br> The topics you will find here are of computer graphics and low-level programming. <br> If you think my works can be improved anyway, then feel free to reach out through my contacts.",
     "blogs": [
         {
-            "name": "How computers work: Adder",
-            "link": "HCW1.html"
+            "name": "Test",
+            "link": "Test.html"
+        },
+        {
+            "name": "Test",
+            "link": "Test.html"
+        },
+        {
+            "name": "Test",
+            "link": "Test.html"
+        },
+        {
+            "name": "Test",
+            "link": "Test.html"
         }
     ],
     "github": "https://github.com/BlackGoku36",
     "twitter": "https://twitter.com/UrjasviS",
-    "mail": "urjasvisuthar@gmail.com"
+    "mail": "urjasvisuthar@gmail.com",
+    "copyright": "© 2021-2022 Urjasvi Suthar"
 }
