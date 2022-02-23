@@ -129,11 +129,14 @@ def createBlogs():
         for entry in entries:
             if ".md" in entry.name:
                 blogContents = []
+                blogContents.append('<div class="contents">')
                 blogContents.append(blogBtns)
                 with open('blogs/'+entry.name, 'r') as file:
                     blogContents.append(''.join(file.readlines()))
                 blogContents.append('\n<script src="highlight.min.js"></script><script>hljs.highlightAll();</script>')
                 blogContents.append(js)
+                blogContents.append('</div>')
+                blogContents.append(copyright)
                 with open('docs/'+entry.name, 'w') as file:
                     file.writelines(blogContents)
                 md_to_html(entry.name)
