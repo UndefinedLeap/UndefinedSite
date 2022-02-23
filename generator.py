@@ -3,6 +3,7 @@ import os
 from subprocess import Popen, PIPE
 import shutil
 import sys
+import shutil
 
 path_to_pandoc = 'pandoc'
 try:
@@ -96,6 +97,10 @@ indexHTML = [
     '''
 ]
 
+try:
+    shutil.rmtree('docs')
+except:
+    x = 0
 try:
     os.mkdir("docs")
 except:
