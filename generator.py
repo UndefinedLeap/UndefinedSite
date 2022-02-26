@@ -124,6 +124,21 @@ shutil.copy('css/blog.css', 'docs/blog.css')
 shutil.copy('css/index.css', 'docs/index.css')
 shutil.copy('js/highlight.min.js', 'docs/highlight.min.js')
 
+try:
+    shutil.rmtree('docs/assets')
+except:
+    x = 0
+try:
+    os.mkdir("docs/assets")
+except:
+    x = 0
+
+with os.scandir('blogs/assets/') as entries:
+    for entry in entries:
+        if (".png" or ".jpeg") in entry.name:
+            shutil.copy('blogs/assets/'+entry.name, 'docs/assets/'+entry.name)
+
+
 def createBlogs():
     with os.scandir('blogs/') as entries:
         for entry in entries:
