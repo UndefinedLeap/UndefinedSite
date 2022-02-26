@@ -1,6 +1,6 @@
 # WIP WIP WIP WIP WIP
 
-# Sokoban 2D game
+# Cokoban, sokoban game written in C
 
 Sokonban is puzzle type game, where you push around objects and put them on 'trigger' to open door, to get to your goals.
 
@@ -30,8 +30,8 @@ zig build run
 
 You should see something like this (rotating colorful square):
 
-![](assets/SK2D1.png)
+![](assets/CK2D1.png)
 
 > At moment only supported platform are MacOS (Metal) and Windows (OpenGL). But it should be pretty easy compile for other gapi backends and OSes. <br>(Hint: You just have to edit `build.zig`!).
 
-[**Part 2**](SK2D2.html)
+[**Part 2**](CK2D2.html)

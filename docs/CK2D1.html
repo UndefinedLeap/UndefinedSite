@@ -28,7 +28,8 @@
 <label class="switch">THEME<input class="switch__input" type="submit" data-theme-toggle></label></p>
 <hr />
 <h1 id="wip-wip-wip-wip-wip">WIP WIP WIP WIP WIP</h1>
-<h1 id="sokoban-2d-game">Sokoban 2D game</h1>
+<h1 id="cokoban-sokoban-game-written-in-c">Cokoban, sokoban game written
+in C</h1>
 <p>Sokonban is puzzle type game, where you push around objects and put
 them on ‘trigger’ to open door, to get to your goals.</p>
 <p>Game will be written in C with <a
@@ -52,13 +53,13 @@ We will start creating game from starter project.</li>
 </ol>
 <pre class="bash"><code>zig build run</code></pre>
 <p>You should see something like this (rotating colorful square):</p>
-<p><img src="assets/SK2D1.png" /></p>
+<p><img src="assets/CK2D1.png" /></p>
 <blockquote>
 <p>At moment only supported platform are MacOS (Metal) and Windows
 (OpenGL). But it should be pretty easy compile for other gapi backends
 and OSes. <br>(Hint: You just have to edit <code>build.zig</code>!).</p>
 </blockquote>
-<p><a href="SK2D2.html"><strong>Part 2</strong></a></p>
+<p><a href="CK2D2.html"><strong>Part 2</strong></a></p>
 <script src="highlight.min.js"></script>
 <script>hljs.highlightAll();</script>
 <script>const stylesheet=document.documentElement.style;const toggle=document.querySelector(".switch__input[data-theme-toggle]");toggle.addEventListener("click",()=>{const lightBg=getComputedStyle(document.documentElement).getPropertyValue("--light-bg");const lightAccent=getComputedStyle(document.documentElement).getPropertyValue("--light-accent");const lightAccent2=getComputedStyle(document.documentElement).getPropertyValue("--light-accent-2");const darkBg=getComputedStyle(document.documentElement).getPropertyValue("--dark-bg");const darkAccent=getComputedStyle(document.documentElement).getPropertyValue("--dark-accent");const darkAccent2=getComputedStyle(document.documentElement).getPropertyValue("--dark-accent-2");stylesheet.setProperty("--dark-bg",lightBg);stylesheet.setProperty("--dark-accent",lightAccent);stylesheet.setProperty("--dark-accent-2",lightAccent2);stylesheet.setProperty("--light-bg",darkBg);stylesheet.setProperty("--light-accent",darkAccent);stylesheet.setProperty("--light-accent-2",darkAccent2)});</script>
