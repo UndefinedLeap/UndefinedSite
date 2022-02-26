@@ -27,56 +27,38 @@
 <p><a class="home" href="index.html">HOME</a>
 <label class="switch">THEME<input class="switch__input" type="submit" data-theme-toggle></label></p>
 <hr />
-<h1 id="topic">TOPIC</h1>
-<h2 id="part-1">Part 1</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-eiusmod tempor incididunt ut labore et dolore magna aliqua. Euismod quis
-viverra nibh cras pulvinar mattis. Amet dictum sit amet justo. Ornare
-suspendisse sed nisi lacus sed viverra. Elementum facilisis leo vel
-fringilla est ullamcorper eget nulla facilisi. Purus in mollis nunc sed.
-Lorem donec massa sapien faucibus et. Porta nibh venenatis cras sed
-felis eget velit. Faucibus vitae aliquet nec ullamcorper sit amet risus.
-Pulvinar pellentesque habitant morbi tristique senectus et netus et.
-Bibendum neque egestas congue quisque egestas diam in. Feugiat nisl
-pretium fusce id velit ut tortor. Diam quam nulla porttitor massa id
-neque aliquam. Magna ac placerat vestibulum lectus mauris. Lorem ipsum
-dolor sit amet consectetur adipiscing elit. Tempus imperdiet nulla
-malesuada pellentesque. Libero volutpat sed cras ornare arcu dui
-vivamus. Dignissim diam quis enim lobortis scelerisque fermentum dui.
-Lacus vestibulum sed arcu non odio euismod lacinia.</p>
-<p>Some rust code:</p>
-<pre class="rs"><code>#[derive(Debug)]
-pub enum State {
-    Start,
-    Transient,
-    Closed,
-}
-
-impl From&lt;&amp;&#39;a str&gt; for State {
-    fn from(s: &amp;&#39;a str) -&gt; Self {
-        match s {
-            &quot;start&quot; =&gt; State::Start,
-            &quot;closed&quot; =&gt; State::Closed,
-            _ =&gt; unreachable!(),
-        }
-    }
-}</code></pre>
+<h1 id="wip-wip-wip-wip-wip">WIP WIP WIP WIP WIP</h1>
+<h1 id="sokoban-2d-game">Sokoban 2D game</h1>
+<p>Sokonban is puzzle type game, where you push around objects and put
+them on ‘trigger’ to open door, to get to your goals.</p>
+<p>Game will be written in C with <a
+href="https://github.com/floooh/sokol">sokol gfx</a> and <a
+href="https://github.com/edubart/sokol_gp">sokol gp</a>.</p>
+<h2 id="setup">Setup</h2>
+<h3 id="zigs-build-system">Zig’s Build system</h3>
+<p>We will be using zig compiler as build system, this will make
+building project and make cross-compilation easier. Though, it is
+completely possible for you to use your own build systems. You can
+download zig from <a href="https://ziglang.org/download/">here</a>.</p>
+<h3 id="building">Building</h3>
+<ol type="1">
+<li>Clone <a
+href="https://github.com/BlackGoku36/Sokol2DStarterProject">Sokol2DStarterProject</a>.
+We will start creating game from starter project.</li>
+</ol>
+<pre class="bash"><code>git clone https://github.com/BlackGoku36/Sokol2DStarterProject.git</code></pre>
+<ol start="2" type="1">
+<li>After repo is clone build it:</li>
+</ol>
+<pre class="bash"><code>zig build run</code></pre>
+<p>You should see something like this (rotating colorful square):</p>
+<p><img src="assets/SK2D1.png" /></p>
 <blockquote>
-<p>Some Extra Info: <br><br> Lorem ipsum dolor sit amet, consectetur
-adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-magna aliqua. Tempor commodo ullamcorper a lacus. Laoreet non curabitur
-gravida arcu ac tortor dignissim convallis. Ac orci phasellus egestas
-tellus. Mattis nunc sed blandit libero volutpat sed cras. Facilisi etiam
-dignissim diam quis. Amet massa vitae tortor condimentum lacinia quis
-vel eros. Nam aliquam sem et tortor. Curabitur gravida arcu ac tortor
-dignissim convallis aenean et tortor. Scelerisque purus semper eget
-duis. Faucibus purus in massa tempor nec feugiat. Habitasse platea
-dictumst quisque sagittis purus sit amet. Feugiat nibh sed pulvinar
-proin gravida.</p>
+<p>At moment only supported platform are MacOS (Metal) and Windows
+(OpenGL). But it should be pretty easy compile for other gapi backends
+and OSes. <br>(Hint: You just have to edit <code>build.zig</code>!).</p>
 </blockquote>
-<hr />
-<img
-src="https://cdn.discordapp.com/attachments/670218237891313664/918070434090594314/Halloween2_FinalRender.png" />
+<p><a href="SK2D2.html"><strong>Part 2</strong></a></p>
 <script src="highlight.min.js"></script>
 <script>hljs.highlightAll();</script>
 <script>const stylesheet=document.documentElement.style;const toggle=document.querySelector(".switch__input[data-theme-toggle]");toggle.addEventListener("click",()=>{const lightBg=getComputedStyle(document.documentElement).getPropertyValue("--light-bg");const lightAccent=getComputedStyle(document.documentElement).getPropertyValue("--light-accent");const lightAccent2=getComputedStyle(document.documentElement).getPropertyValue("--light-accent-2");const darkBg=getComputedStyle(document.documentElement).getPropertyValue("--dark-bg");const darkAccent=getComputedStyle(document.documentElement).getPropertyValue("--dark-accent");const darkAccent2=getComputedStyle(document.documentElement).getPropertyValue("--dark-accent-2");stylesheet.setProperty("--dark-bg",lightBg);stylesheet.setProperty("--dark-accent",lightAccent);stylesheet.setProperty("--dark-accent-2",lightAccent2);stylesheet.setProperty("--light-bg",darkBg);stylesheet.setProperty("--light-accent",darkAccent);stylesheet.setProperty("--light-accent-2",darkAccent2)});</script>

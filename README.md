@@ -21,6 +21,7 @@ Personal site generator I made for myself. But you can fork and use it for yours
 ```
 * Create `pfp.png` (obv, your profile pic).
 * Create `blogs` directory and put your markdown blogs there. Code can be included with backticks syntax and raw inlined html works. In case, your preferred programming language is not highlighted, then replace `highlight.min.js` (in `js` folder) with your [own](https://highlightjs.org).
+* In `blogs` directory, create `assets` folder and dump all your images and videos there.
 
 ## Run
 

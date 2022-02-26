@@ -135,7 +135,7 @@ except:
 
 with os.scandir('blogs/assets/') as entries:
     for entry in entries:
-        if (".png" or ".jpeg") in entry.name:
+        if (".png" or ".jpeg" or ".mp4" or ".mov") in entry.name:
             shutil.copy('blogs/assets/'+entry.name, 'docs/assets/'+entry.name)
 
 

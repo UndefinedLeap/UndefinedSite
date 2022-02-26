@@ -8,6 +8,14 @@
 	--light-accent-2: rgb(41, 41, 41);
 }
 
+a{
+	color: var(--dark-accent-2);
+}
+
+li{
+	color: var(--dark-accent-2);
+}
+
 html {
 	font-family: Helvetica, Arial, sans-serif;
 	height: 100%;

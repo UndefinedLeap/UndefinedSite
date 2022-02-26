@@ -3,12 +3,12 @@
     "description": "Welcome! This is where I post my understanding and findings in CS world. <br> The topics you will find here are of computer graphics and low-level programming. <br> If you think my works can be improved anyway, then feel free to reach out through my contacts.",
     "blogs": [
         {
-            "name": "Test",
-            "link": "Tut1.html"
+            "name": "Sokoban game in C: Introduction",
+            "link": "SK2D1.html"
         },
         {
-            "name": "Test",
-            "link": "Tut1.html"
+            "name": "Sokoban game in C: Map",
+            "link": "SK2D2.html"
         },
         {
             "name": "Test",
