@@ -40,9 +40,26 @@ with open('profile.json', 'r') as file:
     profile = json.loads(''.join(file.readlines()))
 
 for blog in profile["blogs"]:
-    name = blog["name"]
-    link = blog["link"]
-    blogs.append("<a href='"+link+"'> <li>"+name+"</li></a>")
+    isSeries = False
+    try:
+        series = blog["series"]
+        isSeries = True
+        blogs.append("<details>")
+        blogs.append("<summary>"+blog["name"]+"</summary>")
+        for chapter in series:
+            name = chapter["name"]
+            link = chapter["link"]
+            blogs.append("<a href='"+link+"'> <li>"+name+"</li></a>")
+        blogs.append("</details>")
+    except:
+        x = 0
+
+    if isSeries == False:
+        name = blog["name"]
+        link = blog["link"]
+        blogs.append("<a href='"+link+"'> <li>"+name+"</li></a>")
+
+
 
 try:
     contacts.append("<a href='"+profile["github"]+"'>"+githubSVG+"</a>")

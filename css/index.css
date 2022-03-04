@@ -75,6 +75,27 @@ svg{
     padding-bottom: 10px;
 }
 
+details {
+    color: var(--dark-accent-2);
+    font-size: 110%;
+}
+
+details > summary{
+    cursor: pointer;
+    user-select:none;
+    margin: 0px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: var(--dark-accent);
+}
+
+.project ul details > a{
+    background-color: var(--dark-accent);
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
 .project a{
     color: var(--dark-accent-2);
     display: block;
