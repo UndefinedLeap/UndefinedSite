@@ -58,6 +58,10 @@ svg{
     stroke: var(--dark-accent-2);
 }
 
+.disabled{
+    pointer-events:none;
+}
+
 .project ul{
     color: var(--dark-accent-2);
     list-style: none;

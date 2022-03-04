@@ -49,7 +49,15 @@ for blog in profile["blogs"]:
         for chapter in series:
             name = chapter["name"]
             link = chapter["link"]
-            blogs.append("<a href='"+link+".html"+"'> <li>"+name+"</li></a>")
+            isDisabled = False
+            try:
+                isDisabled = chapter["disabled"]
+            except:
+                x = 0
+            if isDisabled == True:
+                blogs.append("<a class='disabled' href='"+link+".html"+"'> <li>"+"<s>"+name+"</s>"+"</li></a>")
+            else:
+                blogs.append("<a href='"+link+".html"+"'> <li>"+name+"</li></a>")
         blogs.append("</details>")
     except:
         x = 0

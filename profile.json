@@ -7,10 +7,12 @@
             "series":[
                 {
                     "name": "Cokoban, sokoban game written in C",
+                    "disabled": true,
                     "link": "CK2D1"
                 },
                 {
                     "name": "Cokoban: Map",
+                    "disabled": true,
                     "link": "CK2D2"
                 }
             ]
