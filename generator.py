@@ -49,7 +49,7 @@ for blog in profile["blogs"]:
         for chapter in series:
             name = chapter["name"]
             link = chapter["link"]
-            blogs.append("<a href='"+link+"'> <li>"+name+"</li></a>")
+            blogs.append("<a href='"+link+".html"+"'> <li>"+name+"</li></a>")
         blogs.append("</details>")
     except:
         x = 0
@@ -57,7 +57,7 @@ for blog in profile["blogs"]:
     if isSeries == False:
         name = blog["name"]
         link = blog["link"]
-        blogs.append("<a href='"+link+"'> <li>"+name+"</li></a>")
+        blogs.append("<a href='"+link+".html"+"'> <li>"+name+"</li></a>")
 
 
 
