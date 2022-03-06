@@ -3,27 +3,23 @@
     "description": "Welcome! This is where I post my understanding and findings in CS world. <br> The topics you will find here are of computer graphics and low-level programming. <br> If you think my works can be improved anyway, then feel free to reach out through my contacts.",
     "blogs": [
         {
+            "name": "Slate, a static site generator",
+            "link": "Slate"
+        },
+        {
             "name": "Cokoban Series",
             "series":[
                 {
                     "name": "Cokoban, sokoban game written in C",
                     "disabled": true,
-                    "link": "CK2D1"
+                    "link": "CK/CK2D1"
                 },
                 {
                     "name": "Cokoban: Map",
                     "disabled": true,
-                    "link": "CK2D2"
+                    "link": "CK/CK2D2"
                 }
             ]
-        },
-        {
-            "name": "Test",
-            "link": "CK2D1"
-        },
-        {
-            "name": "Test",
-            "link": "CK2D2"
         }
     ],
     "github": "https://github.com/BlackGoku36",

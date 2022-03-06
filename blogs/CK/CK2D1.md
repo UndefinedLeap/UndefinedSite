@@ -30,7 +30,7 @@ zig build run
 
 You should see something like this (rotating colorful square):
 
-![](assets/CK2D1.png)
+![](../assets/CK2D1.png)
 
 > At moment only supported platform are MacOS (Metal) and Windows (OpenGL). But it should be pretty easy compile for other gapi backends and OSes. <br>(Hint: You just have to edit `build.zig`!).
 

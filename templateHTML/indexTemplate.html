@@ -82,6 +82,9 @@
             const lightAccent2 = getComputedStyle(document.documentElement).getPropertyValue(
                 "--light-accent-2"
             );
+            const lightAccent3 = getComputedStyle(document.documentElement).getPropertyValue(
+                "--light-accent-3"
+            );
             const darkBg = getComputedStyle(document.documentElement).getPropertyValue(
                 "--dark-bg"
             );
@@ -91,13 +94,18 @@
             const darkAccent2 = getComputedStyle(document.documentElement).getPropertyValue(
                 "--dark-accent-2"
             );
+            const darkAccent3 = getComputedStyle(document.documentElement).getPropertyValue(
+                "--dark-accent-3"
+            );
             // switching the css variables  
             stylesheet.setProperty("--dark-bg", lightBg);
             stylesheet.setProperty("--dark-accent", lightAccent);
             stylesheet.setProperty("--dark-accent-2", lightAccent2);
+            stylesheet.setProperty("--dark-accent-3", lightAccent3);
             stylesheet.setProperty("--light-bg", darkBg);
             stylesheet.setProperty("--light-accent", darkAccent);
             stylesheet.setProperty("--light-accent-2", darkAccent2);
+            stylesheet.setProperty("--light-accent-3", darkAccent3);
         });</script>
 </body>
 

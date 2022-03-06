@@ -34,7 +34,7 @@ githubSVG = '''<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" vi
                 </path>
             </svg>'''
 
-js = '<script>const stylesheet=document.documentElement.style;const toggle=document.querySelector(".switch__input[data-theme-toggle]");toggle.addEventListener("click",()=>{const lightBg=getComputedStyle(document.documentElement).getPropertyValue("--light-bg");const lightAccent=getComputedStyle(document.documentElement).getPropertyValue("--light-accent");const lightAccent2=getComputedStyle(document.documentElement).getPropertyValue("--light-accent-2");const darkBg=getComputedStyle(document.documentElement).getPropertyValue("--dark-bg");const darkAccent=getComputedStyle(document.documentElement).getPropertyValue("--dark-accent");const darkAccent2=getComputedStyle(document.documentElement).getPropertyValue("--dark-accent-2");stylesheet.setProperty("--dark-bg",lightBg);stylesheet.setProperty("--dark-accent",lightAccent);stylesheet.setProperty("--dark-accent-2",lightAccent2);stylesheet.setProperty("--light-bg",darkBg);stylesheet.setProperty("--light-accent",darkAccent);stylesheet.setProperty("--light-accent-2",darkAccent2)});</script>'
+js = '<script>const stylesheet=document.documentElement.style;const toggle=document.querySelector(".switch__input[data-theme-toggle]");toggle.addEventListener("click",()=>{const lightBg=getComputedStyle(document.documentElement).getPropertyValue("--light-bg");const lightAccent=getComputedStyle(document.documentElement).getPropertyValue("--light-accent");const lightAccent2=getComputedStyle(document.documentElement).getPropertyValue("--light-accent-2");const lightAccent3=getComputedStyle(document.documentElement).getPropertyValue("--light-accent-3");const darkBg=getComputedStyle(document.documentElement).getPropertyValue("--dark-bg");const darkAccent=getComputedStyle(document.documentElement).getPropertyValue("--dark-accent");const darkAccent2=getComputedStyle(document.documentElement).getPropertyValue("--dark-accent-2");const darkAccent3=getComputedStyle(document.documentElement).getPropertyValue("--dark-accent-3");stylesheet.setProperty("--dark-bg",lightBg);stylesheet.setProperty("--dark-accent",lightAccent);stylesheet.setProperty("--dark-accent-2",lightAccent2);stylesheet.setProperty("--dark-accent-3",lightAccent3);stylesheet.setProperty("--light-bg",darkBg);stylesheet.setProperty("--light-accent",darkAccent);stylesheet.setProperty("--light-accent-2",darkAccent2);stylesheet.setProperty("--light-accent-3",darkAccent3)});</script>'
 
 with open('profile.json', 'r') as file:
     profile = json.loads(''.join(file.readlines()))
@@ -169,10 +169,12 @@ def createBlogs():
         for entry in entries:
             if ".md" in entry.name:
                 blogContents = []
+                blogContents.append('<h1>'+profile["name"]+"</h1>")
                 blogContents.append('<div class="contents">')
                 blogContents.append(blogBtns)
                 with open('blogs/'+entry.name, 'r') as file:
                     blogContents.append(''.join(file.readlines()))
+                blogContents.append("\n")
                 blogContents.append('\n<script src="highlight.min.js"></script><script>hljs.highlightAll();</script>')
                 blogContents.append(js)
                 blogContents.append('</div>')
@@ -185,7 +187,7 @@ def createBlogs():
 def md_to_html(entry):
     process = Popen([
             path_to_pandoc, 
-            '--metadata', 'title='+profile["name"],
+            '--metadata', 'title='+entry[:-3],
             '-s', '--no-highlight', 
             '-c', 'blog.css', 
             'docs/'+entry, 
