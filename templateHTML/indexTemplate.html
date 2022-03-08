@@ -69,44 +69,56 @@
                 </path>
             </svg></a>
     </div>
-    <script> const stylesheet = document.documentElement.style;
+    <script> 
+        const stylesheet = document.documentElement.style;
         const toggle = document.querySelector(".switch__input[data-theme-toggle]");
+        const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
+        if(!localStorage.getItem("theme")){
+            // console.log("doesn't exist");
+            localStorage.setItem("theme", "system");
+        }
+
+        function setDarkTheme(){
+            const darkBg = getComputedStyle(document.documentElement).getPropertyValue("--dark-bg");
+            const darkAccent = getComputedStyle(document.documentElement).getPropertyValue("--dark-accent");
+            const darkAccent2 = getComputedStyle(document.documentElement).getPropertyValue("--dark-accent-2");
+            const darkAccent3 = getComputedStyle(document.documentElement).getPropertyValue("--dark-accent-3");
+            stylesheet.setProperty("--theme-bg", darkBg);
+            stylesheet.setProperty("--theme-accent", darkAccent);
+            stylesheet.setProperty("--theme-accent-2", darkAccent2);
+            stylesheet.setProperty("--theme-accent-3", darkAccent3);
+        }
+        function setLightTheme(){
+            const lightBg = getComputedStyle(document.documentElement).getPropertyValue("--light-bg");
+            const lightAccent = getComputedStyle(document.documentElement).getPropertyValue("--light-accent");
+            const lightAccent2 = getComputedStyle(document.documentElement).getPropertyValue("--light-accent-2");
+            const lightAccent3 = getComputedStyle(document.documentElement).getPropertyValue("--light-accent-3");
+            stylesheet.setProperty("--theme-bg", lightBg);
+            stylesheet.setProperty("--theme-accent", lightAccent);
+            stylesheet.setProperty("--theme-accent-2", lightAccent2);
+            stylesheet.setProperty("--theme-accent-3", lightAccent3);
+        }
+        if(localStorage.getItem("theme") == "system"){
+            darkThemeMq.addListener(e => {
+                if (e.matches) {
+                    setDarkTheme();
+                } else {
+                    setLightTheme();
+                }
+            });
+        }
         toggle.addEventListener("click", () => {
-            // get the css variables  
-            const lightBg = getComputedStyle(document.documentElement).getPropertyValue(
-                "--light-bg"
-            );
-            const lightAccent = getComputedStyle(document.documentElement).getPropertyValue(
-                "--light-accent"
-            );
-            const lightAccent2 = getComputedStyle(document.documentElement).getPropertyValue(
-                "--light-accent-2"
-            );
-            const lightAccent3 = getComputedStyle(document.documentElement).getPropertyValue(
-                "--light-accent-3"
-            );
-            const darkBg = getComputedStyle(document.documentElement).getPropertyValue(
-                "--dark-bg"
-            );
-            const darkAccent = getComputedStyle(document.documentElement).getPropertyValue(
-                "--dark-accent"
-            );
-            const darkAccent2 = getComputedStyle(document.documentElement).getPropertyValue(
-                "--dark-accent-2"
-            );
-            const darkAccent3 = getComputedStyle(document.documentElement).getPropertyValue(
-                "--dark-accent-3"
-            );
-            // switching the css variables  
-            stylesheet.setProperty("--dark-bg", lightBg);
-            stylesheet.setProperty("--dark-accent", lightAccent);
-            stylesheet.setProperty("--dark-accent-2", lightAccent2);
-            stylesheet.setProperty("--dark-accent-3", lightAccent3);
-            stylesheet.setProperty("--light-bg", darkBg);
-            stylesheet.setProperty("--light-accent", darkAccent);
-            stylesheet.setProperty("--light-accent-2", darkAccent2);
-            stylesheet.setProperty("--light-accent-3", darkAccent3);
-        });</script>
+            if(localStorage.getItem("theme") == "system"){
+                localStorage.setItem("theme", "light");
+                setLightTheme();
+            }else if(localStorage.getItem("theme") == "light"){
+                localStorage.setItem("theme", "dark");
+                setDarkTheme();
+            }else{
+                localStorage.setItem("theme", "system");
+            }
+        });
+        </script>
 </body>
 
 </html>

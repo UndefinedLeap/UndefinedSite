@@ -1,11 +1,22 @@
 :root {  
 	--dark-bg: rgb(29, 30, 32);
 	--dark-accent: rgb(48, 48, 53);
-	--dark-accent-2: rgba(226, 226, 226, 0.9);
-
+	--dark-accent-2: rgba(205, 205, 205, 0.9);
+	--dark-accent-3: rgba(131, 116, 231, 0.904);
+	
 	--light-bg: rgb(255, 255, 255);
 	--light-accent: rgba(233, 233, 233, 0.8);
 	--light-accent-2: rgb(41, 41, 41);
+	--light-accent-3: rgb(98, 79, 223);
+
+	--theme-bg: rgb(255, 255, 255);
+	--theme-accent: rgba(233, 233, 233, 0.8);
+	--theme-accent-2: rgb(41, 41, 41);
+	--theme-accent-3: rgb(98, 79, 223);
+
+	--font-size: 18px;
+	--font-size-2: 19px;
+	--font-size-code: 17px;
 }
 
 html {
@@ -20,7 +31,7 @@ body{
     height: 100%;
     display: flex;
     flex-direction: column;
-    background-color: var(--dark-bg);
+    background-color: var(--theme-bg);
 }
 
 .contents{
@@ -40,22 +51,22 @@ body{
 }
 
 h1,h2,h3,h4,h5{
-    color: var(--dark-accent-2);
+    color: var(--theme-accent-2);
 }
 
 p{
-    font-size: 120%;
+    font-size: var(--font-size);
     line-height: 1.3;
-    color: var(--dark-accent-2);
+    color: var(--theme-accent-2);
 }
 
 hr{
     border: 2px solid;
-    color: var(--dark-accent);
+    color: var(--theme-accent);
 }
 
 svg{
-    stroke: var(--dark-accent-2);
+    stroke: var(--theme-accent-2);
 }
 
 .disabled{
@@ -63,11 +74,11 @@ svg{
 }
 
 .project ul{
-    color: var(--dark-accent-2);
+    color: var(--theme-accent-2);
     list-style: none;
     margin: 10px;
     padding: 0px;
-    font-size: 110%;
+    font-size: var(--font-size-2);
 }
 
 .project ul li{
@@ -80,8 +91,8 @@ svg{
 }
 
 details {
-    color: var(--dark-accent-2);
-    font-size: 110%;
+    color: var(--theme-accent-2);
+    font-size: var(--font-size-2);
 }
 
 details > summary{
@@ -91,20 +102,20 @@ details > summary{
     padding-left: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
-    background-color: var(--dark-accent);
+    background-color: var(--theme-accent);
 }
 
 .project ul details > a{
-    background-color: var(--dark-accent);
+    background-color: var(--theme-accent);
     margin-left: 40px;
     margin-right: 40px;
 }
 
 .project a{
-    color: var(--dark-accent-2);
+    color: var(--theme-accent-2);
     display: block;
     text-decoration: none;
-    background-color: var(--dark-accent);
+    background-color: var(--theme-accent);
 }
 
 .contact a{
@@ -113,31 +124,26 @@ details > summary{
 }
 
 footer{
-    font-size: 120%;
     padding: 10px;
     line-height: 1.3;
     text-align: center;
-    color: var(--dark-accent-2);
-    background-color: var(--dark-accent);
+    color: var(--theme-accent-2);
+    background-color: var(--theme-accent);
 }
 
-.switch {
+button {
 	font-weight: bold;
 	display: inline-block;
-	color: var(--dark-accent-2);
-	background-color: var(--dark-accent);
+	color: var(--theme-accent-2);
+	background-color: var(--theme-accent);
 	text-align: center;
-	padding-left: 15px;
-	padding-top: 15px;
-	padding-bottom: 15px;
+	margin: 0px;
+	padding: 15px;
+	font-size: var(--font-size-2);
+	border: none;
+	text-decoration: none;
 }
 
-.switch:hover {
+button:hover {
 	cursor: pointer;
-}
-
-.switch__input {  
-	opacity: 0;  
-	width: 0;  
-	height: 0;  
 }

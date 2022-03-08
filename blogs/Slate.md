@@ -37,7 +37,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 *Italic*
 
-***Italic***
+***Bold Italic***
 
 > Blockquote like this!
 >

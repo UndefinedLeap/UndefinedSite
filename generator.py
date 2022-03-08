@@ -34,7 +34,69 @@ githubSVG = '''<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" vi
                 </path>
             </svg>'''
 
-js = '<script>const stylesheet=document.documentElement.style;const toggle=document.querySelector(".switch__input[data-theme-toggle]");toggle.addEventListener("click",()=>{const lightBg=getComputedStyle(document.documentElement).getPropertyValue("--light-bg");const lightAccent=getComputedStyle(document.documentElement).getPropertyValue("--light-accent");const lightAccent2=getComputedStyle(document.documentElement).getPropertyValue("--light-accent-2");const lightAccent3=getComputedStyle(document.documentElement).getPropertyValue("--light-accent-3");const darkBg=getComputedStyle(document.documentElement).getPropertyValue("--dark-bg");const darkAccent=getComputedStyle(document.documentElement).getPropertyValue("--dark-accent");const darkAccent2=getComputedStyle(document.documentElement).getPropertyValue("--dark-accent-2");const darkAccent3=getComputedStyle(document.documentElement).getPropertyValue("--dark-accent-3");stylesheet.setProperty("--dark-bg",lightBg);stylesheet.setProperty("--dark-accent",lightAccent);stylesheet.setProperty("--dark-accent-2",lightAccent2);stylesheet.setProperty("--dark-accent-3",lightAccent3);stylesheet.setProperty("--light-bg",darkBg);stylesheet.setProperty("--light-accent",darkAccent);stylesheet.setProperty("--light-accent-2",darkAccent2);stylesheet.setProperty("--light-accent-3",darkAccent3)});</script>'
+js = '''
+<script>
+        const stylesheet = document.documentElement.style;
+        const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
+        if(!localStorage.getItem("theme")){
+            localStorage.setItem("theme", "system");
+        }
+        setButtonText();
+
+        function setDarkTheme(){
+            const darkBg = getComputedStyle(document.documentElement).getPropertyValue("--dark-bg");
+            const darkAccent = getComputedStyle(document.documentElement).getPropertyValue("--dark-accent");
+            const darkAccent2 = getComputedStyle(document.documentElement).getPropertyValue("--dark-accent-2");
+            const darkAccent3 = getComputedStyle(document.documentElement).getPropertyValue("--dark-accent-3");
+            stylesheet.setProperty("--theme-bg", darkBg);
+            stylesheet.setProperty("--theme-accent", darkAccent);
+            stylesheet.setProperty("--theme-accent-2", darkAccent2);
+            stylesheet.setProperty("--theme-accent-3", darkAccent3);
+        }
+        function setLightTheme(){
+            const lightBg = getComputedStyle(document.documentElement).getPropertyValue("--light-bg");
+            const lightAccent = getComputedStyle(document.documentElement).getPropertyValue("--light-accent");
+            const lightAccent2 = getComputedStyle(document.documentElement).getPropertyValue("--light-accent-2");
+            const lightAccent3 = getComputedStyle(document.documentElement).getPropertyValue("--light-accent-3");
+            stylesheet.setProperty("--theme-bg", lightBg);
+            stylesheet.setProperty("--theme-accent", lightAccent);
+            stylesheet.setProperty("--theme-accent-2", lightAccent2);
+            stylesheet.setProperty("--theme-accent-3", lightAccent3);
+        }
+        function setButtonText(){
+            const theme = localStorage.getItem("theme");
+            var text = theme.toUpperCase() +' THEME';
+            document.getElementById("btn").innerHTML = text;
+        }
+        darkThemeMq.addListener(e => {
+            if (e.matches) {
+                if(localStorage.getItem("theme") == "system"){
+                    setButtonText();
+                    setDarkTheme();
+                }
+            } else {
+                if(localStorage.getItem("theme") == "system"){
+                    setButtonText();
+                    setLightTheme();
+                }
+            }
+        });
+        function setTheme(){
+            if(localStorage.getItem("theme") == "system"){
+                localStorage.setItem("theme", "light");
+                setLightTheme();
+                setButtonText();
+            }else if(localStorage.getItem("theme") == "light"){
+                localStorage.setItem("theme", "dark");
+                setDarkTheme();
+                setButtonText();
+            }else{
+                localStorage.setItem("theme", "system");
+                setButtonText();
+            }
+        }
+</script>
+'''
 
 with open('profile.json', 'r') as file:
     profile = json.loads(''.join(file.readlines()))
@@ -94,15 +156,19 @@ try:
 except:
     print("-> copyright skipped")
 
+switchThemeBTN = '''
+<button id="btn" onclick="setTheme()">THEME</button>
+'''
+
 indexHTML = [
     '''<!DOCTYPE html><html><head><meta charset="utf-8">
     <link rel="stylesheet" href="index.css"><meta name="viewport" content="width=device-width, initial-scale=1">
     <title>''', profile["name"], '''</title></head>
     <body>
     <div class="contents">
-    <h1 style="display: inline-block; padding-right: 20px;">''', profile["name"], '''</h1>
-    <label class="switch">THEME<input class="switch__input" type="submit" data-theme-toggle></label>
-    <hr>
+    <h1 style="display: inline-block; padding-right: 20px;">''', profile["name"], '''</h1>''',
+    switchThemeBTN,
+    '''<hr>
     <div class="profile">
         <img src="pfp.png"
             width="150" height="150" style="float:left; margin-right: 15px; margin-top: 5px;">
@@ -137,8 +203,7 @@ with open('docs/index.html', 'w') as file:
 # Blogs
 
 
-blogBtns = '''<a class="home" href="index.html">HOME</a>
-<label class="switch">THEME<input class="switch__input" type="submit" data-theme-toggle></label>  
+blogBtns = '''<a class="home" href="index.html">HOME</a>'''+switchThemeBTN+'''
 
 ---
 
