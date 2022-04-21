@@ -4,20 +4,27 @@
     "blogs": [
         {
             "name": "Slate, a static site generator",
-            "link": "Slate"
+            "link": "Slate.md"
         },
         {
             "name": "Cokoban Series",
             "series":[
                 {
                     "name": "Cokoban, sokoban game written in C",
-                    "disabled": true,
-                    "link": "CK/CK2D1"
+                    "link": "CK/CK2D1.md"
                 },
                 {
                     "name": "Cokoban: Map",
-                    "disabled": true,
-                    "link": "CK/CK2D2"
+                    "link": "CK/CK2D2.md"
+                }
+            ]
+        },
+        {
+            "name": "Data structure and algorithms",
+            "series":[
+                {
+                    "name": "DSA - 1",
+                    "link": "DSA/DSA1.md"
                 }
             ]
         }

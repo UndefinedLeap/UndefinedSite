@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Slate</title>
+  <title>DSA - 1</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -21,13 +21,13 @@
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Slate</h1>
+<h1 class="title">DSA - 1</h1>
 </header>
 <h1>
 URJASVI SUTHAR
 </h1>
 <div class="contents">
-<p><a class="home" href="index.html">HOME</a>
+<p><a class='home' href=index.html>HOME</a>
 <button id="btn" onclick="setTheme()">THEME</button></p>
 <hr />
 <h1 id="slate-a-static-site-generator">Slate, a static site
@@ -142,67 +142,71 @@ src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.finearta
 <p>Dark and light mode is also supported.</p>
 <script src="highlight.min.js"></script>
 <script>hljs.highlightAll();</script>
-<script>
-        const stylesheet = document.documentElement.style;
-        const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
-        if(!localStorage.getItem("theme")){
-            localStorage.setItem("theme", "system");
-        }
-        setButtonText();
+<script>const stylesheet = document.documentElement.style;
+const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
 
-        function setDarkTheme(){
-            const darkBg = getComputedStyle(document.documentElement).getPropertyValue("--dark-bg");
-            const darkAccent = getComputedStyle(document.documentElement).getPropertyValue("--dark-accent");
-            const darkAccent2 = getComputedStyle(document.documentElement).getPropertyValue("--dark-accent-2");
-            const darkAccent3 = getComputedStyle(document.documentElement).getPropertyValue("--dark-accent-3");
-            stylesheet.setProperty("--theme-bg", darkBg);
-            stylesheet.setProperty("--theme-accent", darkAccent);
-            stylesheet.setProperty("--theme-accent-2", darkAccent2);
-            stylesheet.setProperty("--theme-accent-3", darkAccent3);
+if(!localStorage.getItem("theme")){
+    localStorage.setItem("theme", "system");
+}
+
+setButtonText();
+
+function setDarkTheme(){
+    const darkBg = getComputedStyle(document.documentElement).getPropertyValue("--dark-bg");
+    const darkAccent = getComputedStyle(document.documentElement).getPropertyValue("--dark-accent");
+    const darkAccent2 = getComputedStyle(document.documentElement).getPropertyValue("--dark-accent-2");
+    const darkAccent3 = getComputedStyle(document.documentElement).getPropertyValue("--dark-accent-3");
+    stylesheet.setProperty("--theme-bg", darkBg);
+    stylesheet.setProperty("--theme-accent", darkAccent);
+    stylesheet.setProperty("--theme-accent-2", darkAccent2);
+    stylesheet.setProperty("--theme-accent-3", darkAccent3);
+}
+
+function setLightTheme(){
+    const lightBg = getComputedStyle(document.documentElement).getPropertyValue("--light-bg");
+    const lightAccent = getComputedStyle(document.documentElement).getPropertyValue("--light-accent");
+    const lightAccent2 = getComputedStyle(document.documentElement).getPropertyValue("--light-accent-2");
+    const lightAccent3 = getComputedStyle(document.documentElement).getPropertyValue("--light-accent-3");
+    stylesheet.setProperty("--theme-bg", lightBg);
+    stylesheet.setProperty("--theme-accent", lightAccent);
+    stylesheet.setProperty("--theme-accent-2", lightAccent2);
+    stylesheet.setProperty("--theme-accent-3", lightAccent3);
+}
+
+function setButtonText(){
+    const theme = localStorage.getItem("theme");
+    var text = theme.toUpperCase() +' THEME';
+    document.getElementById("btn").innerHTML = text;
+}
+
+darkThemeMq.addListener(e => {
+    if (e.matches) {
+        if(localStorage.getItem("theme") == "system"){
+            setButtonText();
+            setDarkTheme();
         }
-        function setLightTheme(){
-            const lightBg = getComputedStyle(document.documentElement).getPropertyValue("--light-bg");
-            const lightAccent = getComputedStyle(document.documentElement).getPropertyValue("--light-accent");
-            const lightAccent2 = getComputedStyle(document.documentElement).getPropertyValue("--light-accent-2");
-            const lightAccent3 = getComputedStyle(document.documentElement).getPropertyValue("--light-accent-3");
-            stylesheet.setProperty("--theme-bg", lightBg);
-            stylesheet.setProperty("--theme-accent", lightAccent);
-            stylesheet.setProperty("--theme-accent-2", lightAccent2);
-            stylesheet.setProperty("--theme-accent-3", lightAccent3);
+    } else {
+        if(localStorage.getItem("theme") == "system"){
+            setButtonText();
+            setLightTheme();
         }
-        function setButtonText(){
-            const theme = localStorage.getItem("theme");
-            var text = theme.toUpperCase() +' THEME';
-            document.getElementById("btn").innerHTML = text;
-        }
-        darkThemeMq.addListener(e => {
-            if (e.matches) {
-                if(localStorage.getItem("theme") == "system"){
-                    setButtonText();
-                    setDarkTheme();
-                }
-            } else {
-                if(localStorage.getItem("theme") == "system"){
-                    setButtonText();
-                    setLightTheme();
-                }
-            }
-        });
-        function setTheme(){
-            if(localStorage.getItem("theme") == "system"){
-                localStorage.setItem("theme", "light");
-                setLightTheme();
-                setButtonText();
-            }else if(localStorage.getItem("theme") == "light"){
-                localStorage.setItem("theme", "dark");
-                setDarkTheme();
-                setButtonText();
-            }else{
-                localStorage.setItem("theme", "system");
-                setButtonText();
-            }
-        }
-</script>
+    }
+});
+
+function setTheme(){
+    if(localStorage.getItem("theme") == "system"){
+        localStorage.setItem("theme", "light");
+        setLightTheme();
+        setButtonText();
+    }else if(localStorage.getItem("theme") == "light"){
+        localStorage.setItem("theme", "dark");
+        setDarkTheme();
+        setButtonText();
+    }else{
+        localStorage.setItem("theme", "system");
+        setButtonText();
+    }
+}</script>
 </div>
 <footer>
 © 2021-2022 Urjasvi Suthar

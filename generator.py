@@ -5,6 +5,22 @@ import shutil
 import sys
 import shutil
 
+# UTIL functions ------
+
+def create_dir(file_path):
+    try:
+        os.mkdir(file_path)
+    except:
+        x = 0
+
+def remove_dir(file_path):
+    try:
+        shutil.rmtree(file_path)
+    except:
+        x = 0
+
+# UTIL functions ------
+
 path_to_pandoc = 'pandoc'
 try:
     path_to_pandoc = sys.argv[1]
@@ -34,69 +50,16 @@ githubSVG = '''<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" vi
                 </path>
             </svg>'''
 
-js = '''
-<script>
-        const stylesheet = document.documentElement.style;
-        const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
-        if(!localStorage.getItem("theme")){
-            localStorage.setItem("theme", "system");
-        }
-        setButtonText();
-
-        function setDarkTheme(){
-            const darkBg = getComputedStyle(document.documentElement).getPropertyValue("--dark-bg");
-            const darkAccent = getComputedStyle(document.documentElement).getPropertyValue("--dark-accent");
-            const darkAccent2 = getComputedStyle(document.documentElement).getPropertyValue("--dark-accent-2");
-            const darkAccent3 = getComputedStyle(document.documentElement).getPropertyValue("--dark-accent-3");
-            stylesheet.setProperty("--theme-bg", darkBg);
-            stylesheet.setProperty("--theme-accent", darkAccent);
-            stylesheet.setProperty("--theme-accent-2", darkAccent2);
-            stylesheet.setProperty("--theme-accent-3", darkAccent3);
-        }
-        function setLightTheme(){
-            const lightBg = getComputedStyle(document.documentElement).getPropertyValue("--light-bg");
-            const lightAccent = getComputedStyle(document.documentElement).getPropertyValue("--light-accent");
-            const lightAccent2 = getComputedStyle(document.documentElement).getPropertyValue("--light-accent-2");
-            const lightAccent3 = getComputedStyle(document.documentElement).getPropertyValue("--light-accent-3");
-            stylesheet.setProperty("--theme-bg", lightBg);
-            stylesheet.setProperty("--theme-accent", lightAccent);
-            stylesheet.setProperty("--theme-accent-2", lightAccent2);
-            stylesheet.setProperty("--theme-accent-3", lightAccent3);
-        }
-        function setButtonText(){
-            const theme = localStorage.getItem("theme");
-            var text = theme.toUpperCase() +' THEME';
-            document.getElementById("btn").innerHTML = text;
-        }
-        darkThemeMq.addListener(e => {
-            if (e.matches) {
-                if(localStorage.getItem("theme") == "system"){
-                    setButtonText();
-                    setDarkTheme();
-                }
-            } else {
-                if(localStorage.getItem("theme") == "system"){
-                    setButtonText();
-                    setLightTheme();
-                }
-            }
-        });
-        function setTheme(){
-            if(localStorage.getItem("theme") == "system"){
-                localStorage.setItem("theme", "light");
-                setLightTheme();
-                setButtonText();
-            }else if(localStorage.getItem("theme") == "light"){
-                localStorage.setItem("theme", "dark");
-                setDarkTheme();
-                setButtonText();
-            }else{
-                localStorage.setItem("theme", "system");
-                setButtonText();
-            }
-        }
-</script>
+# Make button
+switch_theme_btn_html = '''
+<button id="btn" onclick="setTheme()">THEME</button>
 '''
+switch_theme_btn_js = ""
+
+with open('js/theming.js', 'r') as file:
+    switch_theme_btn_js += "<script>"
+    switch_theme_btn_js += ''.join(file.readlines())
+    switch_theme_btn_js += "</script>"
 
 with open('profile.json', 'r') as file:
     profile = json.loads(''.join(file.readlines()))
@@ -117,9 +80,9 @@ for blog in profile["blogs"]:
             except:
                 x = 0
             if isDisabled == True:
-                blogs.append("<a class='disabled' href='"+link+".html"+"'> <li>"+"<s>"+name+"</s>"+"</li></a>")
+                blogs.append("<a class='disabled' href='"+link[:-3]+".html"+"'> <li>"+"<s>"+name+"</s>"+"</li></a>")
             else:
-                blogs.append("<a href='"+link+".html"+"'> <li>"+name+"</li></a>")
+                blogs.append("<a href='"+link[:-3]+".html"+"'> <li>"+name+"</li></a>")
         blogs.append("</details>")
     except:
         x = 0
@@ -127,9 +90,7 @@ for blog in profile["blogs"]:
     if isSeries == False:
         name = blog["name"]
         link = blog["link"]
-        blogs.append("<a href='"+link+".html"+"'> <li>"+name+"</li></a>")
-
-
+        blogs.append("<a href='"+link[:-3]+".html"+"'> <li>"+name+"</li></a>")
 
 try:
     contacts.append("<a href='"+profile["github"]+"'>"+githubSVG+"</a>")
@@ -156,10 +117,6 @@ try:
 except:
     print("-> copyright skipped")
 
-switchThemeBTN = '''
-<button id="btn" onclick="setTheme()">THEME</button>
-'''
-
 indexHTML = [
     '''<!DOCTYPE html><html><head><meta charset="utf-8">
     <link rel="stylesheet" href="index.css"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -167,7 +124,7 @@ indexHTML = [
     <body>
     <div class="contents">
     <h1 style="display: inline-block; padding-right: 20px;">''', profile["name"], '''</h1>''',
-    switchThemeBTN,
+    switch_theme_btn_html,
     '''<hr>
     <div class="profile">
         <img src="pfp.png"
@@ -182,87 +139,89 @@ indexHTML = [
     </div>''', 
     contact, 
     '''</div>''', 
-    copyright, js,'''
+    copyright, switch_theme_btn_js,'''
     </body>
     </html>
     '''
 ]
 
-try:
-    shutil.rmtree('docs')
-except:
-    x = 0
-try:
-    os.mkdir("docs")
-except:
-    x = 0
+# Clean build docs
+remove_dir("docs")
+create_dir("docs")
 
 with open('docs/index.html', 'w') as file:
     file.writelines(indexHTML)
 
-# Blogs
 
-
-blogBtns = '''<a class="home" href="index.html">HOME</a>'''+switchThemeBTN+'''
-
+def get_home_button(file_name):
+    return "<a class='home' href="+((len(file_name.split('/')) - 1) * '../')+"index.html"+">HOME</a>"+switch_theme_btn_html+'''
 ---
 
 '''
 
+# Copy resources
 shutil.copy('pfp.png', 'docs/pfp.png')
 shutil.copy('css/blog.css', 'docs/blog.css')
 shutil.copy('css/index.css', 'docs/index.css')
 shutil.copy('js/highlight.min.js', 'docs/highlight.min.js')
 
-try:
-    shutil.rmtree('docs/assets')
-except:
-    x = 0
-try:
-    os.mkdir("docs/assets")
-except:
-    x = 0
+# Clean build assets
+remove_dir("docs/assets")
+create_dir("docs/assets")
 
-with os.scandir('blogs/assets/') as entries:
-    for entry in entries:
-        if (".png" or ".jpeg" or ".mp4" or ".mov") in entry.name:
-            shutil.copy('blogs/assets/'+entry.name, 'docs/assets/'+entry.name)
+with os.scandir('blogs/assets/') as assets:
+    for asset in assets:
+        if (".png" or ".jpeg" or ".mp4" or ".mov") in asset.name:
+            shutil.copy('blogs/assets/'+asset.name, 'docs/assets/'+asset.name)
 
-
-def createBlogs():
-    with os.scandir('blogs/') as entries:
-        for entry in entries:
-            if ".md" in entry.name:
-                blogContents = []
-                blogContents.append('<h1>'+profile["name"]+"</h1>")
-                blogContents.append('<div class="contents">')
-                blogContents.append(blogBtns)
-                with open('blogs/'+entry.name, 'r') as file:
-                    blogContents.append(''.join(file.readlines()))
-                blogContents.append("\n")
-                blogContents.append('\n<script src="highlight.min.js"></script><script>hljs.highlightAll();</script>')
-                blogContents.append(js)
-                blogContents.append('</div>')
-                blogContents.append(copyright)
-                with open('docs/'+entry.name, 'w') as file:
-                    file.writelines(blogContents)
-                md_to_html(entry.name)
-                os.remove('docs/'+entry.name)
-
-def md_to_html(entry):
+def md_to_html(title, file_name):
     process = Popen([
             path_to_pandoc, 
-            '--metadata', 'title='+entry[:-3],
+            '--metadata', 'title='+title,
             '-s', '--no-highlight', 
-            '-c', 'blog.css', 
-            'docs/'+entry, 
-            '-o', 'docs/'+entry[:-3]+'.html'
+            '-c', ((len(file_name.split('/')) - 1) * '../') + 'blog.css', 
+            'docs/'+file_name, 
+            '-o', 'docs/'+file_name[:-3]+'.html'
         ], stdout=PIPE, stderr=PIPE)
     stdout, stderr = process.communicate()
     error = bytes.decode(stderr)
     if(error == ""):
-        print('\033[32m '+entry+' successfully translated to html'+' \033[0m')
+        print('\033[32m '+file_name+' successfully translated to html'+' \033[0m')
     else:
         print("\033[31m '"+error+"' \033[0m")
 
-createBlogs()
+def create_blog(title, file_name, dir_name):
+    blogContents = []
+    blogContents.append('<h1>' + profile["name"] + "</h1>")
+    blogContents.append('<div class="contents">')
+    blogContents.append(get_home_button(file_name))
+    with open('blogs/' + file_name, 'r') as file:
+        blogContents.append(''.join(file.readlines()))
+    blogContents.append("\n")
+    blogContents.append('\n<script src="highlight.min.js"></script><script>hljs.highlightAll();</script>')
+    blogContents.append(switch_theme_btn_js)
+    blogContents.append('</div>')
+    blogContents.append(copyright)
+    if(dir_name != ""):
+        create_dir('docs/'+dir_name)
+    with open('docs/' + file_name, 'w') as file:
+        file.writelines(blogContents)
+    md_to_html(title, file_name)
+    os.remove('docs/' + file_name)
+
+for blog in profile["blogs"]:
+    isSeries = False
+    try:
+        series = blog["series"]
+        isSeries = True
+        for chapter in series:
+            title = chapter["name"]
+            file_name = chapter["link"]
+            create_blog(name, file_name, file_name.split('/')[0])
+    except:
+        x = 0
+
+    if isSeries == False:
+        title = blog["name"]
+        file_name = blog["link"]
+        create_blog(name, file_name, "")

@@ -1,0 +1,4 @@
+# SS
+
+As my Signal and System classes is going on, I am here typing this blog hoping for solution. So for what solution am I looking for? Oh god, I don't want to die from boredom, I don't understand anything, I can't find any motive behind this class. Unfortunately for me clg grades aren't motivating enough for me to actually care, not matter how hard I try, if I don't find subject interesting than forget getting good marks. Hopefully I find the solution fast enough for me to catch up to class, catch up to *switch window*, oh basics operations of signals! I have no idea what going on, hopefully it not too late *sobs*.
+Fortunately, signal and systems are used in computer graphics for image processing and making noise function for random generation, hopefully this motivates me to learn signal and systems.
