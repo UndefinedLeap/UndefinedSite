@@ -90,7 +90,15 @@ for blog in profile["blogs"]:
     if isSeries == False:
         name = blog["name"]
         link = blog["link"]
-        blogs.append("<a href='"+link[:-3]+".html"+"'> <li>"+name+"</li></a>")
+        isDisabled = False
+        try:
+            isDisabled = blog["disabled"]
+        except:
+            x = 0
+        if isDisabled == True:
+            blogs.append("<a class='disabled' href='"+link[:-3]+".html"+"'> <li>"+"<s>"+name+"</s>"+"</li></a>")
+        else:
+            blogs.append("<a href='"+link[:-3]+".html"+"'> <li>"+name+"</li></a>")
 
 try:
     contacts.append("<a href='"+profile["github"]+"'>"+githubSVG+"</a>")
