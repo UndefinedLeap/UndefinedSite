@@ -5,31 +5,6 @@
         {
             "name": "Slate, a static site generator",
             "link": "Slate.md"
-        },
-        {
-            "name": "Cokoban Series",
-            "series":[
-                {
-                    "name": "Cokoban, sokoban game written in C",
-                    "link": "CK/CK2D1.md",
-                    "disabled": true
-                },
-                {
-                    "name": "Cokoban: Map",
-                    "link": "CK/CK2D2.md",
-                    "disabled": true
-                }
-            ]
-        },
-        {
-            "name": "Data structure and algorithms",
-            "series":[
-                {
-                    "name": "DSA - 1",
-                    "link": "DSA/DSA1.md",
-                    "disabled": true
-                }
-            ]
         }
     ],
     "github": "https://github.com/BlackGoku36",
