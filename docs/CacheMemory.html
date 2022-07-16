@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Cache Memory</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="blog.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Cache Memory</h1>
+</header>
+<h1>
+URJASVI SUTHAR
+</h1>
+<div class="contents">
+<p><a class='home' href=index.html>HOME</a>
+<button id="btn" onclick="setTheme()">THEME</button></p>
+<hr />
+<h1 id="cache-memory-notes">Cache Memory notes</h1>
+<p>Hopefully I actually complete this one.</p>
+<p>Agenda:</p>
+<ul>
+<li>Explain what cache memory is and why does it matter.</li>
+<li>What is direct mapped, associative and set-associative cache
+memory.</li>
+<li>Simple calculations of things like cache address bits and determine
+different things of the cache memory that helps with understanding of
+data in cache.</li>
+<li>Different types of misses and how it can be improved.</li>
+<li>Real-life example of code that hate cache:
+<ul>
+<li>Multiplication of huge N matrix with sub matrix and how it can be
+optimised.</li>
+<li>Why Linked list sucks in this regard.</li>
+</ul></li>
+<li>Why nobody (except those who want high performance design, I don’t
+think cache memory is big brain thing tho) seems to give fuck about
+cache memory even if it taught in university.</li>
+</ul>
+<script src="highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script>const stylesheet = document.documentElement.style;
+const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
+
+if(!localStorage.getItem("theme")){
+    localStorage.setItem("theme", "system");
+}
+
+setButtonText();
+
+function setDarkTheme(){
+    const darkBg = getComputedStyle(document.documentElement).getPropertyValue("--dark-bg");
+    const darkAccent = getComputedStyle(document.documentElement).getPropertyValue("--dark-accent");
+    const darkAccent2 = getComputedStyle(document.documentElement).getPropertyValue("--dark-accent-2");
+    const darkAccent3 = getComputedStyle(document.documentElement).getPropertyValue("--dark-accent-3");
+    stylesheet.setProperty("--theme-bg", darkBg);
+    stylesheet.setProperty("--theme-accent", darkAccent);
+    stylesheet.setProperty("--theme-accent-2", darkAccent2);
+    stylesheet.setProperty("--theme-accent-3", darkAccent3);
+}
+
+function setLightTheme(){
+    const lightBg = getComputedStyle(document.documentElement).getPropertyValue("--light-bg");
+    const lightAccent = getComputedStyle(document.documentElement).getPropertyValue("--light-accent");
+    const lightAccent2 = getComputedStyle(document.documentElement).getPropertyValue("--light-accent-2");
+    const lightAccent3 = getComputedStyle(document.documentElement).getPropertyValue("--light-accent-3");
+    stylesheet.setProperty("--theme-bg", lightBg);
+    stylesheet.setProperty("--theme-accent", lightAccent);
+    stylesheet.setProperty("--theme-accent-2", lightAccent2);
+    stylesheet.setProperty("--theme-accent-3", lightAccent3);
+}
+
+function setButtonText(){
+    const theme = localStorage.getItem("theme");
+    var text = theme.toUpperCase() +' THEME';
+    document.getElementById("btn").innerHTML = text;
+}
+
+darkThemeMq.addListener(e => {
+    if (e.matches) {
+        if(localStorage.getItem("theme") == "system"){
+            setButtonText();
+            setDarkTheme();
+        }
+    } else {
+        if(localStorage.getItem("theme") == "system"){
+            setButtonText();
+            setLightTheme();
+        }
+    }
+});
+
+function setTheme(){
+    if(localStorage.getItem("theme") == "system"){
+        localStorage.setItem("theme", "light");
+        setLightTheme();
+        setButtonText();
+    }else if(localStorage.getItem("theme") == "light"){
+        localStorage.setItem("theme", "dark");
+        setDarkTheme();
+        setButtonText();
+    }else{
+        localStorage.setItem("theme", "system");
+        setButtonText();
+    }
+}</script>
+</div>
+<footer>
+© 2021-2022 Urjasvi Suthar
+</footer>
+</body>
+</html>
