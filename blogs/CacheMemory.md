@@ -1,6 +1,34 @@
-# Cache Memory notes
+# Cache Memory Notes
 
-Hopefully I actually complete this one.
+## What a cache memory?
+
+DRAM performance improve lot slower compared to CPU performance, as a result DRAM and CPU performance gap keep on increasing. Chances are that your CPU is already done it's job and is waiting (idling) for data from DRAM to continue further, here the DRAM speed is bottelnecking CPU speed. To solve this, we put smaller but faster (also more costy) memory on CPU. Chunk(s) of memory (DRAM) is loaded into this, so that CPU can immediately access it. This memory is know as cache memory.
+
+Memory hierarchy looks something like this:
+
+```txt
+                          |  DRAM
+    Size and              |  L3 (shared between processes)
+         latency decrease |  L2
+                          v  L1 (Data), L1 (Instruction)
+```
+*Hierarchy is showen as formality, we don't have to keep levels of cache is mind when programming*
+
+## Associativity
+
+### Direct-mapped cache
+
+TBD
+
+### Set-associative cache
+
+TBD
+
+### Fully associative cache
+
+TBD
+
+---
 
 Agenda:
 
