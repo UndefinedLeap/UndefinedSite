@@ -47,11 +47,32 @@ immediately access it. This memory is know as cache memory.</p>
 <p><em>Hierarchy is showen as formality, we don’t have to keep levels of
 cache is mind when programming</em></p>
 <h2 id="associativity">Associativity</h2>
+<p>Associativity of cache is how copy of main-memory is mapped to cache.
+You can think of cache as an N-Byte 3D array, though the 2D array is
+laid linearly one after another instead of stack. This is how it look
+like:</p>
+<pre class="txt"><code>{ // 3
+    { // 2
+        { a, b, c, d, e, f, g, h }, // 1
+        { i, j, k, l, m, n, o, p }
+    },
+    {
+        { q, r, s, t, u, v, w, x },
+        { y, z, !, @, #, $, %, ^ }
+    }
+}</code></pre>
+<ol type="1">
+<li>This is cache line (aka block), here each bytes are contiguous. It’s
+size can be X-byte long, here it’s 8 bytes.</li>
+<li>A Group of cache lines is called a set. There can be Y number of
+sets.</li>
+<li>Cache consists of Y sets * X bytes.</li>
+</ol>
+<h3 id="fully-associative-cache">Fully associative cache</h3>
+<p>TBD</p>
 <h3 id="direct-mapped-cache">Direct-mapped cache</h3>
 <p>TBD</p>
 <h3 id="set-associative-cache">Set-associative cache</h3>
-<p>TBD</p>
-<h3 id="fully-associative-cache">Fully associative cache</h3>
 <p>TBD</p>
 <hr />
 <p>Agenda:</p>

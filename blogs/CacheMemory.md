@@ -16,15 +16,34 @@ Memory hierarchy looks something like this:
 
 ## Associativity
 
+Associativity of cache is how copy of main-memory is mapped to cache.
+You can think of cache as an N-Byte 3D array, though the 2D array is laid linearly one after another instead of stack. This is how it look like:
+
+```txt
+{ // 3
+    { // 2
+        { a, b, c, d, e, f, g, h }, // 1
+        { i, j, k, l, m, n, o, p }
+    },
+    {
+        { q, r, s, t, u, v, w, x },
+        { y, z, !, @, #, $, %, ^ }
+    }
+}
+```
+1. This is cache line (aka block), here each bytes are contiguous. It's size can be X-byte long, here it's 8 bytes.
+2. A Group of cache lines is called a set. There can be Y number of sets.
+3. Cache consists of Y sets * X bytes.
+
+### Fully associative cache
+
+TBD
+
 ### Direct-mapped cache
 
 TBD
 
 ### Set-associative cache
-
-TBD
-
-### Fully associative cache
 
 TBD
 
