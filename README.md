@@ -42,10 +42,8 @@ python3 generator.py <path/to/pandoc_bin>
 
 - Just refactor the whole codebase
     - Put common css stuffs in single file (?)
-    - Move js to seperate file
 - Add tags and tag based searching
 - Maybe string based searching
-- Check toml as replacement for json
 
 ## License
 
