@@ -58,4 +58,5 @@ Agenda:
 - Real-life example of code that hate cache:
     - Multiplication of huge N matrix with sub matrix and how it can be optimised.
     - Why Linked list sucks in this regard.
+    - Why Bubble sort is faster than merge sort when data size is small. (Not tested, purely theoritical).
 - Why nobody (except those who want high performance design, I don't think cache memory is big brain thing tho) seems to give fuck about cache memory even if it taught in university.
