@@ -10,6 +10,11 @@
             "name": "Cache Memory",
             "link": "CacheMemory.md",
             "disabled": true
+        },
+        {
+            "name": "Career in Computer Science",
+            "link": "Career.md",
+            "disabled": true
         }
     ],
     "github": "https://github.com/BlackGoku36",
