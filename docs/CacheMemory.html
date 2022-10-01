@@ -106,19 +106,18 @@ if(!localStorage.getItem("theme")){
 }
 
 if(localStorage.getItem("theme") == "system") setSystemTheme();
-// setButtonText();
+else if(localStorage.getItem("theme") == "light") setLightTheme();
+else if(localStorage.getItem("theme") == "dark") setDarkTheme();
+
+setButtonText();
 
 function setSystemTheme(){
-    // if(localStorage.getItem("theme") == "system"){
-        if(darkThemeMq.matches){
-            setButtonText();
-            setDarkTheme();
-        }else{
-            setButtonText();
-            setLightTheme();
-        }
-        document.getElementById("btn").innerHTML = 'SYSTEM THEME';
-    // }
+    if(darkThemeMq.matches){
+        setDarkTheme();
+    }else{
+        setLightTheme();
+    }
+    setButtonText();
 }
 
 function setDarkTheme(){
@@ -130,7 +129,7 @@ function setDarkTheme(){
     stylesheet.setProperty("--theme-accent", darkAccent);
     stylesheet.setProperty("--theme-accent-2", darkAccent2);
     stylesheet.setProperty("--theme-accent-3", darkAccent3);
-    document.getElementById("btn").innerHTML = 'DARK THEME';
+    setButtonText();
 }
 
 function setLightTheme(){
@@ -142,42 +141,35 @@ function setLightTheme(){
     stylesheet.setProperty("--theme-accent", lightAccent);
     stylesheet.setProperty("--theme-accent-2", lightAccent2);
     stylesheet.setProperty("--theme-accent-3", lightAccent3);
-    document.getElementById("btn").innerHTML = 'LIGHT THEME';
+    setButtonText();
 }
 
-// function setButtonText(){
-//     const theme = localStorage.getItem("theme");
-//     var text = theme.toUpperCase() +' THEME';
-//     document.getElementById("btn").innerHTML = text;
-// }
+function setButtonText(){
+    const theme = localStorage.getItem("theme");
+    var text = theme.toUpperCase() +' THEME';
+    document.getElementById("btn").innerHTML = text;
+}
 
-// darkThemeMq.addListener(e => {
-//     if (e.matches) {
-//         if(localStorage.getItem("theme") == "system"){
-//             setButtonText();
-//             setDarkTheme();
-//         }
-//     } else {
-//         if(localStorage.getItem("theme") == "system"){
-//             setButtonText();
-//             setLightTheme();
-//         }
-//     }
-// });
+darkThemeMq.addListener(e => {
+    if(localStorage.getItem("theme") == "system"){
+        if (e.matches) {
+            setDarkTheme();
+        } else {
+            setLightTheme();
+        }
+    }
+});
 
 function setTheme(){
     if(localStorage.getItem("theme") == "system"){
         localStorage.setItem("theme", "light");
         setLightTheme();
-        // setButtonText();
     }else if(localStorage.getItem("theme") == "light"){
         localStorage.setItem("theme", "dark");
         setDarkTheme();
-        // setButtonText();
     }else{
         localStorage.setItem("theme", "system");
         setSystemTheme();
-        // setButtonText();
     }
 }</script>
 </div>

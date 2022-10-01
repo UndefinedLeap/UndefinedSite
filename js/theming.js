@@ -5,7 +5,20 @@ if(!localStorage.getItem("theme")){
     localStorage.setItem("theme", "system");
 }
 
+if(localStorage.getItem("theme") == "system") setSystemTheme();
+else if(localStorage.getItem("theme") == "light") setLightTheme();
+else if(localStorage.getItem("theme") == "dark") setDarkTheme();
+
 setButtonText();
+
+function setSystemTheme(){
+    if(darkThemeMq.matches){
+        setDarkTheme();
+    }else{
+        setLightTheme();
+    }
+    setButtonText();
+}
 
 function setDarkTheme(){
     const darkBg = getComputedStyle(document.documentElement).getPropertyValue("--dark-bg");
@@ -16,6 +29,7 @@ function setDarkTheme(){
     stylesheet.setProperty("--theme-accent", darkAccent);
     stylesheet.setProperty("--theme-accent-2", darkAccent2);
     stylesheet.setProperty("--theme-accent-3", darkAccent3);
+    setButtonText();
 }
 
 function setLightTheme(){
@@ -27,6 +41,7 @@ function setLightTheme(){
     stylesheet.setProperty("--theme-accent", lightAccent);
     stylesheet.setProperty("--theme-accent-2", lightAccent2);
     stylesheet.setProperty("--theme-accent-3", lightAccent3);
+    setButtonText();
 }
 
 function setButtonText(){
@@ -36,14 +51,10 @@ function setButtonText(){
 }
 
 darkThemeMq.addListener(e => {
-    if (e.matches) {
-        if(localStorage.getItem("theme") == "system"){
-            setButtonText();
+    if(localStorage.getItem("theme") == "system"){
+        if (e.matches) {
             setDarkTheme();
-        }
-    } else {
-        if(localStorage.getItem("theme") == "system"){
-            setButtonText();
+        } else {
             setLightTheme();
         }
     }
@@ -53,13 +64,11 @@ function setTheme(){
     if(localStorage.getItem("theme") == "system"){
         localStorage.setItem("theme", "light");
         setLightTheme();
-        setButtonText();
     }else if(localStorage.getItem("theme") == "light"){
         localStorage.setItem("theme", "dark");
         setDarkTheme();
-        setButtonText();
     }else{
         localStorage.setItem("theme", "system");
-        setButtonText();
+        setSystemTheme();
     }
 }
