@@ -5,7 +5,20 @@ if(!localStorage.getItem("theme")){
     localStorage.setItem("theme", "system");
 }
 
+if(localStorage.getItem("theme") == "system") setSystemTheme();
 setButtonText();
+
+function setSystemTheme(){
+    // if(localStorage.getItem("theme") == "system"){
+        if(darkThemeMq.matches){
+            setButtonText();
+            setDarkTheme();
+        }else{
+            setButtonText();
+            setLightTheme();
+        }
+    // }
+}
 
 function setDarkTheme(){
     const darkBg = getComputedStyle(document.documentElement).getPropertyValue("--dark-bg");
@@ -35,19 +48,19 @@ function setButtonText(){
     document.getElementById("btn").innerHTML = text;
 }
 
-darkThemeMq.addListener(e => {
-    if (e.matches) {
-        if(localStorage.getItem("theme") == "system"){
-            setButtonText();
-            setDarkTheme();
-        }
-    } else {
-        if(localStorage.getItem("theme") == "system"){
-            setButtonText();
-            setLightTheme();
-        }
-    }
-});
+// darkThemeMq.addListener(e => {
+//     if (e.matches) {
+//         if(localStorage.getItem("theme") == "system"){
+//             setButtonText();
+//             setDarkTheme();
+//         }
+//     } else {
+//         if(localStorage.getItem("theme") == "system"){
+//             setButtonText();
+//             setLightTheme();
+//         }
+//     }
+// });
 
 function setTheme(){
     if(localStorage.getItem("theme") == "system"){
@@ -60,6 +73,7 @@ function setTheme(){
         setButtonText();
     }else{
         localStorage.setItem("theme", "system");
+        setSystemTheme();
         setButtonText();
     }
 }
