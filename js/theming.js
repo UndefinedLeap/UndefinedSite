@@ -6,7 +6,10 @@ if(!localStorage.getItem("theme")){
 }
 
 if(localStorage.getItem("theme") == "system") setSystemTheme();
-setButtonText();
+else{
+    setTheme();
+}
+// setButtonText();
 
 function setSystemTheme(){
     // if(localStorage.getItem("theme") == "system"){
@@ -17,6 +20,7 @@ function setSystemTheme(){
             setButtonText();
             setLightTheme();
         }
+        document.getElementById("btn").innerHTML = 'SYSTEM THEME';
     // }
 }
 
@@ -29,6 +33,7 @@ function setDarkTheme(){
     stylesheet.setProperty("--theme-accent", darkAccent);
     stylesheet.setProperty("--theme-accent-2", darkAccent2);
     stylesheet.setProperty("--theme-accent-3", darkAccent3);
+    document.getElementById("btn").innerHTML = 'DARK THEME';
 }
 
 function setLightTheme(){
@@ -40,13 +45,14 @@ function setLightTheme(){
     stylesheet.setProperty("--theme-accent", lightAccent);
     stylesheet.setProperty("--theme-accent-2", lightAccent2);
     stylesheet.setProperty("--theme-accent-3", lightAccent3);
+    document.getElementById("btn").innerHTML = 'LIGHT THEME';
 }
 
-function setButtonText(){
-    const theme = localStorage.getItem("theme");
-    var text = theme.toUpperCase() +' THEME';
-    document.getElementById("btn").innerHTML = text;
-}
+// function setButtonText(){
+//     const theme = localStorage.getItem("theme");
+//     var text = theme.toUpperCase() +' THEME';
+//     document.getElementById("btn").innerHTML = text;
+// }
 
 // darkThemeMq.addListener(e => {
 //     if (e.matches) {
@@ -66,14 +72,14 @@ function setTheme(){
     if(localStorage.getItem("theme") == "system"){
         localStorage.setItem("theme", "light");
         setLightTheme();
-        setButtonText();
+        // setButtonText();
     }else if(localStorage.getItem("theme") == "light"){
         localStorage.setItem("theme", "dark");
         setDarkTheme();
-        setButtonText();
+        // setButtonText();
     }else{
         localStorage.setItem("theme", "system");
         setSystemTheme();
-        setButtonText();
+        // setButtonText();
     }
 }
