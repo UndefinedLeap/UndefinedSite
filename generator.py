@@ -140,7 +140,6 @@ indexHTML = [
         <p>''',profile["description"],'''</p>
         <br>
     </div>
-    <br><br><br>
     <h2>BLOGS</h2><hr>
     <div class="project">
         <ul>''', ''.join(blogs), '''</ul>
