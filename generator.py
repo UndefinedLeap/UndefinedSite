@@ -135,7 +135,7 @@ indexHTML = [
     switch_theme_btn_html,
     '''<hr>
     <div class="profile">
-        <img src="pfp.png"
+        <img src="''', profile["profile_picture"], '''"
             width="150" height="150" style="float:left; margin-right: 15px; margin-top: 5px;">
         <p>''',profile["description"],'''</p>
         <br>
@@ -167,7 +167,7 @@ def get_home_button(file_name):
 '''
 
 # Copy resources
-shutil.copy('pfp.png', 'docs/pfp.png')
+shutil.copy(profile["profile_picture"], 'docs/'+profile["profile_picture"])
 shutil.copy('css/blog.css', 'docs/blog.css')
 shutil.copy('css/index.css', 'docs/index.css')
 shutil.copy('js/highlight.min.js', 'docs/highlight.min.js')

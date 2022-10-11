@@ -50,6 +50,10 @@ body{
     padding-right: 15px;
 }
 
+.profile img{
+    border-radius: 50%;
+}
+
 .profile::after{
     content: "";
     clear: both;
