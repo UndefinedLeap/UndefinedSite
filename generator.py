@@ -205,7 +205,7 @@ def create_blog(title, file_name, dir_name):
     with open('blogs/' + file_name, 'r') as file:
         blogContents.append(''.join(file.readlines()))
     blogContents.append("\n")
-    blogContents.append('\n<script src="highlight.min.js"></script><script>hljs.highlightAll();</script>')
+    blogContents.append('\n<script src="' + ((len(file_name.split('/')) - 1) * '../') +'highlight.min.js"></script><script>hljs.highlightAll();</script>')
     blogContents.append(switch_theme_btn_js)
     blogContents.append('</div>')
     blogContents.append(copyright)
