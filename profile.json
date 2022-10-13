@@ -16,6 +16,16 @@
             "name": "Career in Computer Science",
             "link": "Career.md",
             "disabled": true
+        },
+        {
+            "name": "Computer Graphics from Scratch",
+            "series": [
+                {
+                    "name": "Filled Triangle",
+                    "link": "cg_from_scratch/Part1.md",
+                    "disabled": true
+                }
+            ]
         }
     ],
     "github": "https://github.com/BlackGoku36",

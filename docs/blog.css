@@ -104,11 +104,6 @@ blockquote p{
 	margin: 0px;
 }
 
-
-img, iframe{
-	width: 100%;
-}
-
 footer{
     padding: 10px;
     line-height: 1.3;
