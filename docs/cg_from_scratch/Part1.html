@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Filled Triangle</title>
+  <title>Career in Computer Science</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -21,7 +21,7 @@
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Filled Triangle</h1>
+<h1 class="title">Career in Computer Science</h1>
 </header>
 <h1>
 URJASVI SUTHAR
@@ -32,95 +32,125 @@ URJASVI SUTHAR
 <hr />
 <h1 id="computer-graphics-from-scratch">Computer Graphics from
 scratch</h1>
-<p>Welcome, this series is about my journey on writing software renderer
-from scratch in C on CPU. I will write more as I make progress with this
-project. The goal of this it to learn and understand what goes behind
-rendering API like Metal/DX/Vulkan/etc. and so that I can understand
-applied computer graphics from all layers of abstractions.</p>
-<h2 id="rendering-first-image">Rendering First Image</h2>
-<p>For now, I will just output a <a
-href="https://en.wikipedia.org/wiki/Netpbm">PPM</a> file, because it the
-easiest one to read/write from/to.</p>
-<p>so, now we just create a test image, to ensure that pixel writing
-works:</p>
-<pre class="c"><code>FILE* file_ptr = fopen(&quot;render.ppm&quot;, &quot;w&quot;);
-assert(file_ptr != NULL);
-
-vec3_T frame_buffer[WIDTH * HEIGHT] = {};
-
-for (int y = 0; y &lt; HEIGHT; ++y){
-    for (int x = 0; x &lt; WIDTH; ++x){
-        frame_buffer[y * WIDTH + x].x = (unsigned char)((float)x/WIDTH*255.0);
-        frame_buffer[y * WIDTH + x].y = (unsigned char)((float)y/HEIGHT*255);
-        frame_buffer[y * WIDTH + x].z = (unsigned char)(255);
-    }
-}
-
-fprintf(file_ptr, &quot;P3\n %d %d \n255\n&quot;, WIDTH, HEIGHT);
-for (int i = 0; i &lt; WIDTH*HEIGHT; ++i){
-    vec3_T col = frame_buffer[i];
-    fprintf(file_ptr, &quot;%d %d %d\n&quot;, (int) col.x, (int) col.y, (int) col.z);
-}
-fclose(file_ptr);</code></pre>
-<p><em>NOTE: code here is just to demonstrate the concept</em></p>
-<p>you should get something like this:</p>
-<p><img src="../assets/cg_from_scratch_1.png" width="320" height="180"></p>
-<h2 id="filled-triangle">Filled Triangle</h2>
-<p>Let say we have 3 points A, B and C, these points are triangle’s
-vertices. We check if a point P is inside the triangle or outside it, if
-it inside than we color a pixel at point P. To check, we take cross
-product of P and any other vertices joining at a common vertex.</p>
-<p>That is:</p>
-<pre class="txt"><code>-&gt; Area = (P - A) x (B - A)
-
-          | Px - Ax   Bx - Ax |
--&gt; Area = |                   |
-          | Py - Ay   By - Ay |
-
--&gt; Area = (Px - Ax)(By - Ay) - (Py - Ay)(Bx - Ax)
-
-(Note: order matters!)</code></pre>
-<p>What we care about is sign of area, but not it’s values (for now).
-The line joining the products (P - A) and (B - A), will split apart the
-plane into two, one will be called ‘right’ (area is +ve) and another
-‘left’ (area is -ve). Now, we will take cross product the same way with
-all sides and then at some point P, the result of three cross product is
-either -ve or +ve, we know the point is either inside or outside the
-triangle. How the vertices are taken as A, B or C, matters, that is
-their ‘winding order’. And this winding order decides if point is inside
-when all cross products are +ve or -ve.</p>
-<p>For example:</p>
-<pre class="txt"><code>-&gt; I = (0.0, 0.5)
--&gt; J = (0.5, -0.5)
--&gt; K = (-0.5, -0.5)</code></pre>
-<p>And we get their cross-product as:</p>
-<pre class="txt"><code>-&gt; Area1 = (P - I) x (J - I) // A = I, B = J
--&gt; Area2 = (P - J) x (K - J) // A = J, B = K
--&gt; Area3 = (P - K) x (I - K) // A = K, B = I</code></pre>
-<p>Our winding order here is ‘counter-clock-wise’ and so, point is
-inside the triangle if all areas is -ve.</p>
-<pre class="c"><code>if(Area1 &lt; 0 &amp;&amp; Area2 &lt; 0 &amp;&amp; Area3 &lt; 0){
-    printf(&quot;point is inside!&quot;);
-}</code></pre>
-<p>If winding order was ‘clock-wise’ then point would be in triangle is
-all areas were +ve.</p>
-<pre class="c"><code>float edge_function(float ax, float ay, float bx, float by, float px, float py){
-    return (px - ax) * (by - ay) - (py - ay) * (bx - ax);
-}</code></pre>
-<pre class="c"><code>for (int y = 0; y &lt; HEIGHT; ++y){
-    for (int x = 0; x &lt; WIDTH; ++x){
-
-        float w0 = edge_function(x0, y0, x1, y1, x, y);
-        float w1 = edge_function(x1, y1, x2, y2, x, y);
-        float w2 = edge_function(x2, y2, x0, y0, x, y);
-
-        if(w0 &lt; 0 &amp;&amp; w1 &lt; 0 &amp;&amp; w2 &lt; 0){
-            put_pixel(frame_buffer, x, y, 255, 0, 0);
-        }
-    }
-}</code></pre>
-<p>We should get:</p>
-<p><img src="../assets/cg_from_scratch_2.png" width="320" height="180"></p>
+<blockquote>
+<p>Any sufficiently advanced technology is indistinguishable from magic
+- Arthur C. Clarke</p>
+</blockquote>
+<p>I have been doing computer graphics for quite some time, so I am not
+a <strong>total</strong> beginner at it. The main problem was that I
+skipped some theoretical parts and didn’t try to understand them
+(admittedly, mathematics). Instead, I jumped here and there to produce
+pretty-looking renders. So I decided to start computer graphics from
+scratch, where the goal is to try to learn and understand as much as
+possible. So, I thought writing a CPU rasterizer was a way to achieve
+it. As it will help me learn and understand:</p>
+<ul>
+<li>How APIs like OpenGL, Metal, etc works underneath.</li>
+<li>How to structure/architect renderer properly, so that it
+efficient.</li>
+<li>What kind of mathematics are generally used in computer graphics.
+And give motivation to learn vectors and matrices.</li>
+<li>Basics optimizations techniques such as AABB, frustrum culling, etc
+and also advanced techinques suchs as Multithreading and SIMD.</li>
+</ul>
+<p>And the last (but not least) reason is <a
+href="https://justforfunnoreally.dev">this</a>.</p>
+<p>I chose C for this project mainly because C/C++ is required for
+computer graphics jobs. Though, I plan to switch to Zig when I am done
+with enough C projects.</p>
+<blockquote>
+<p>The reason I chose C instead of C++. Because of C’s simplicity and
+doesn’t have the same type of C++’s “modern” bullshit.</p>
+</blockquote>
+<p>Before we go any further, I would like to say that <a
+href="https://www.scratchapixel.com">scratchapixel</a> is one of the
+best sites I have found on computer graphics.</p>
+<h2 id="triangle">Triangle</h2>
+<p>The first step is pretty obvious to anyone that has done even a bit
+of computer graphics. And that is to produce
+<code>Hello Triangle</code>. <img></p>
+<p><img src="../assets/cg_from_scratch_1.png" width="50%"></p>
+<p>Then we take a step further and add camera and perspective
+projection. We use a checkerboard pattern to see if the perspective
+interpolation of UVs is correct. (It might look incorrect, but if you
+squint your eye, you will see it. I am too lazy to go back and get a
+better render XD)</p>
+<p><img src="../assets/cg_from_scratch_2.png" width="40%"></p>
+<h2 id="more-than-a-triangle">More than a Triangle</h2>
+<p>How about 12 triangles? We put them together to get a cube. Added
+depth-testing and lighting. Here is the cube with normal as colour and
+its depth map.</p>
+<div display:="" data-flex="">
+<p><img src="../assets/cg_from_scratch_3.png" width="40%">
+<img src="../assets/cg_from_scratch_3_depth.png" width="40%"></p>
+</div>
+<h2 id="geometry-primitives-are-boring">Geometry primitives are
+boring</h2>
+<p>I wanted to learn procedural generation for quite some time now. But
+it would take some time to produce anything cool, so I decided to
+copy-paste the maze generation code that I wrote before and create a
+mesh from it. (The maze generator I used here is backtracker)</p>
+<p><img src="../assets/cg_from_scratch_4.png" width="60%"></p>
+<h2 id="shadows">Shadows</h2>
+<p>I was going to jump to do some optimization, but scratchapixel’s
+owner told me to add shadows. Fortunately, I implemented shadow mapping
+before when I used to write GPU renderer, so I knew what to do. Also
+quickly pushed it to have vertex colours.</p>
+<p><img src="../assets/cg_from_scratch_5.png" width="60%"></p>
+<h2 id="optimizations">Optimizations</h2>
+<p>When I benchmarked with <code>hyperfine</code> it showed that it
+takes (no compiler optimizations):</p>
+<table>
+<thead>
+<tr class="header">
+<th>Timing (Range)</th>
+<th>AABB</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>58.598 s … 58.814 s</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td>503.9 ms … 545.4 ms</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p>I thought I need to implement multithreading and SIMD to make it
+interactive and that the CPU software rasterizer was terribly slow. But
+I did a stupid mistake and included all the <code>fprintf</code> for ppm
+in the calculation. After removing them, I got (with AABB, without AABB
+is terribly slow):</p>
+<table>
+<thead>
+<tr class="header">
+<th>Timing (Range)</th>
+<th>Compiler Optimization</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>33.9 ms … 36.4 ms</td>
+<td>None</td>
+</tr>
+<tr class="even">
+<td>6.6 ms … 8.4 ms</td>
+<td>O2/O3</td>
+</tr>
+</tbody>
+</table>
+<p>It’s hard to see how good is CPU at rasterizing, even then it looks a
+lot better right now. Though our maze is far away, AABB would slow down
+a lot when we get close to the maze, since it will have to calculate lot
+more pixels.</p>
+<p>We will have to implement multi-threading, SIMD and other techniques
+such as frustum culling, to at least make it interactive for a close-up
+low-poly scene.</p>
+<p>I am using 2015 MacBook Pro with
+<code>2.2 GHz Quad-Core Intel Core i7</code> to measue this.</p>
+<p>See ya’all in later :)</p>
 <script src="../highlight.min.js"></script>
 <script>hljs.highlightAll();</script>
 <script>const stylesheet = document.documentElement.style;

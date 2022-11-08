@@ -1,107 +1,69 @@
 # Computer Graphics from scratch
 
-Welcome, this series is about my journey on writing software renderer from scratch in C on CPU. I will write more as I make progress with this project. The goal of this it to learn and understand what goes behind rendering API like Metal/DX/Vulkan/etc. and so that I can understand applied computer graphics from all layers of abstractions.
+> Any sufficiently advanced technology is indistinguishable from magic - Arthur C. Clarke
 
-## Rendering First Image
+I have been doing computer graphics for quite some time, so I am not a **total** beginner at it. The main problem was that I skipped some theoretical parts and didn't try to understand them (admittedly, mathematics). Instead, I jumped here and there to produce pretty-looking renders. So I decided to start computer graphics from scratch, where the goal is to try to learn and understand as much as possible. So, I thought writing a CPU rasterizer was a way to achieve it. As it will help me learn and understand: 
 
-For now, I will just output a [PPM](https://en.wikipedia.org/wiki/Netpbm) file, because it the easiest one to read/write from/to.
+- How APIs like OpenGL, Metal, etc works underneath.
+- How to structure/architect renderer properly, so that it efficient.
+- What kind of mathematics are generally used in computer graphics. And give motivation to learn vectors and matrices.
+- Basics optimizations techniques such as AABB, frustrum culling, etc and also advanced techinques suchs as Multithreading and SIMD.
 
-so, now we just create a test image, to ensure that pixel writing works:
+And the last (but not least) reason is [this](https://justforfunnoreally.dev).
 
+I chose C for this project mainly because C/C++ is required for computer graphics jobs. Though, I plan to switch to Zig when I am done with enough C projects.
 
-```c
-FILE* file_ptr = fopen("render.ppm", "w");
-assert(file_ptr != NULL);
+> The reason I chose C instead of C++. Because of C's simplicity and doesn't have the same type of C++'s "modern" bullshit.
 
-vec3_T frame_buffer[WIDTH * HEIGHT] = {};
+Before we go any further, I would like to say that [scratchapixel](https://www.scratchapixel.com) is one of the best sites I have found on computer graphics.
 
-for (int y = 0; y < HEIGHT; ++y){
-    for (int x = 0; x < WIDTH; ++x){
-        frame_buffer[y * WIDTH + x].x = (unsigned char)((float)x/WIDTH*255.0);
-        frame_buffer[y * WIDTH + x].y = (unsigned char)((float)y/HEIGHT*255);
-        frame_buffer[y * WIDTH + x].z = (unsigned char)(255);
-    }
-}
+## Triangle
+The first step is pretty obvious to anyone that has done even a bit of computer graphics. And that is to produce `Hello Triangle`.
+<img>
 
-fprintf(file_ptr, "P3\n %d %d \n255\n", WIDTH, HEIGHT);
-for (int i = 0; i < WIDTH*HEIGHT; ++i){
-    vec3_T col = frame_buffer[i];
-    fprintf(file_ptr, "%d %d %d\n", (int) col.x, (int) col.y, (int) col.z);
-}
-fclose(file_ptr);
-```
+<img src="../assets/cg_from_scratch_1.png" width="50%">
 
-*NOTE: code here is just to demonstrate the concept*
+Then we take a step further and add camera and perspective projection. We use a checkerboard pattern to see if the perspective interpolation of UVs is correct. (It might look incorrect, but if you squint your eye, you will see it. I am too lazy to go back and get a better render XD)
 
-you should get something like this:
+<img src="../assets/cg_from_scratch_2.png" width="40%">
 
-<img src="../assets/cg_from_scratch_1.png" width="320" height="180">
+## More than a Triangle
+How about 12 triangles? We put them together to get a cube. Added depth-testing and lighting. Here is the cube with normal as colour and its depth map.
 
-## Filled Triangle
+<div display: flex>
+<img src="../assets/cg_from_scratch_3.png" width="40%">
+<img src="../assets/cg_from_scratch_3_depth.png" width="40%">
+</div>
 
-Let say we have 3 points A, B and C, these points are triangle's vertices. We check if a point P is inside the triangle or outside it, if it inside than we color a pixel at point P. To check, we take cross product of P and any other vertices joining at a common vertex.
+## Geometry primitives are boring
+I wanted to learn procedural generation for quite some time now. But it would take some time to produce anything cool, so I decided to copy-paste the maze generation code that I wrote before and create a mesh from it. (The maze generator I used here is backtracker)
 
-That is:
-```txt
--> Area = (P - A) x (B - A)
+<img src="../assets/cg_from_scratch_4.png" width="60%">
 
-          | Px - Ax   Bx - Ax |
--> Area = |                   |
-          | Py - Ay   By - Ay |
+## Shadows
+I was going to jump to do some optimization, but scratchapixel's owner told me to add shadows. Fortunately, I implemented shadow mapping before when I used to write GPU renderer, so I knew what to do. Also quickly pushed it to have vertex colours.
 
--> Area = (Px - Ax)(By - Ay) - (Py - Ay)(Bx - Ax)
+<img src="../assets/cg_from_scratch_5.png" width="60%">
 
-(Note: order matters!)
-```
+## Optimizations
+When I benchmarked with `hyperfine` it showed that it takes (no compiler optimizations):
 
-What we care about is sign of area, but not it's values (for now). The line joining the products (P - A) and (B - A), will split apart the plane into two, one will be called 'right' (area is +ve) and another 'left' (area is -ve). Now, we will take cross product the same way with all sides and then at some point P, the result of three cross product is either -ve or +ve, we know the point is either inside or outside the triangle. How the vertices are taken as A, B or C, matters, that is their 'winding order'. And this winding order decides if point is inside when all cross products are +ve or -ve.
+| Timing (Range)      | AABB |
+| ------------------- | ---- |
+| 58.598 s … 58.814 s | No   |
+| 503.9 ms … 545.4 ms | Yes  |
 
-For example:
+I thought I need to implement multithreading and SIMD to make it interactive and that the CPU software rasterizer was terribly slow. But I did a stupid mistake and included all the `fprintf` for ppm in the calculation. After removing them, I got (with AABB, without AABB is terribly slow):
 
-```txt
--> I = (0.0, 0.5)
--> J = (0.5, -0.5)
--> K = (-0.5, -0.5)
-```
+| Timing (Range)      | Compiler Optimization |
+| ------------------- | --------------------- |
+| 33.9 ms ... 36.4 ms | None                  |
+| 6.6 ms …   8.4 ms   | O2/O3                 |
 
-And we get their cross-product as:
+It's hard to see how good is CPU at rasterizing, even then it looks a lot better right now. Though our maze is far away, AABB would slow down a lot when we get close to the maze, since it will have to calculate lot more pixels.
 
-```txt
--> Area1 = (P - I) x (J - I) // A = I, B = J
--> Area2 = (P - J) x (K - J) // A = J, B = K
--> Area3 = (P - K) x (I - K) // A = K, B = I
-```
+We will have to implement multi-threading, SIMD  and other techniques such as frustum culling, to at least make it interactive for a close-up low-poly scene.
 
-Our winding order here is 'counter-clock-wise' and so, point is inside the triangle if all areas is -ve.
+I am using 2015 MacBook Pro with `2.2 GHz Quad-Core Intel Core i7` to measue this.
 
-```c
-if(Area1 < 0 && Area2 < 0 && Area3 < 0){
-    printf("point is inside!");
-}
-```
-
-If winding order was 'clock-wise' then point would be in triangle is all areas were +ve.
-
-```c
-float edge_function(float ax, float ay, float bx, float by, float px, float py){
-    return (px - ax) * (by - ay) - (py - ay) * (bx - ax);
-}
-```
-```c
-for (int y = 0; y < HEIGHT; ++y){
-    for (int x = 0; x < WIDTH; ++x){
-
-        float w0 = edge_function(x0, y0, x1, y1, x, y);
-        float w1 = edge_function(x1, y1, x2, y2, x, y);
-        float w2 = edge_function(x2, y2, x0, y0, x, y);
-
-        if(w0 < 0 && w1 < 0 && w2 < 0){
-            put_pixel(frame_buffer, x, y, 255, 0, 0);
-        }
-    }
-}
-```
-
-We should get:
-
-<img src="../assets/cg_from_scratch_2.png" width="320" height="180">
+See ya'all in later :)
