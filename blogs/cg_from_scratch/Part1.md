@@ -7,7 +7,7 @@ I have been doing computer graphics for quite some time, so I am not a **total**
 - How APIs like OpenGL, Metal, etc works underneath.
 - How to structure/architect renderer properly, so that it efficient.
 - What kind of mathematics are generally used in computer graphics. And give motivation to learn vectors and matrices.
-- Basics optimizations techniques such as AABB, frustrum culling, etc and also advanced techinques suchs as Multithreading and SIMD.
+- Basics optimizations techniques such as AABB, frustrum culling, etc and also advanced techinques suchs as Multi-threading and SIMD.
 
 And the last (but not least) reason is [this](https://justforfunnoreally.dev).
 
@@ -53,7 +53,7 @@ When I benchmarked with `hyperfine` it showed that it takes (no compiler optimiz
 | 58.598 s … 58.814 s | No   |
 | 503.9 ms … 545.4 ms | Yes  |
 
-I thought I need to implement multithreading and SIMD to make it interactive and that the CPU software rasterizer was terribly slow. But I did a stupid mistake and included all the `fprintf` for ppm in the calculation. After removing them, I got (with AABB, without AABB is terribly slow):
+I thought I need to implement multi-threading and SIMD to make it interactive and that the CPU software rasterizer was terribly slow. But I did a stupid mistake and included all the `fprintf` for ppm in the calculation. After removing them, I got (with AABB, without AABB is terribly slow):
 
 | Timing (Range)      | Compiler Optimization |
 | ------------------- | --------------------- |
