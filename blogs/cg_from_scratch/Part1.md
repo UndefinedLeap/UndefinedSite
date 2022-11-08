@@ -11,9 +11,9 @@ I have been doing computer graphics for quite some time, so I am not a **total**
 
 And the last (but not least) reason is [this](https://justforfunnoreally.dev).
 
-I chose C for this project mainly because C/C++ is required for computer graphics jobs. Though, I plan to switch to Zig when I am done with enough C projects.
+I choose C for this project mainly because C/C++ is required for computer graphics jobs. Though, I plan to switch to Zig when I am done with enough C projects.
 
-> The reason I chose C instead of C++. Because of C's simplicity and doesn't have the same type of C++'s "modern" bullshit.
+> The reason I choose C instead of C++. Because of C's simplicity and doesn't have the same type of C++'s "modern" bullshit.
 
 Before we go any further, I would like to say that [scratchapixel](https://www.scratchapixel.com) is one of the best sites I have found on computer graphics.
 
