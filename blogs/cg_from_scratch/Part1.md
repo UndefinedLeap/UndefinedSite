@@ -66,4 +66,4 @@ We will have to implement multi-threading, SIMD  and other techniques such as fr
 
 I am using 2015 MacBook Pro with `2.2 GHz Quad-Core Intel Core i7` to measue this.
 
-See ya'all in later :)
+See ya'all later :)
