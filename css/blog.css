@@ -52,6 +52,25 @@ body{
 	background-color: var(--theme-bg);
 }
 
+table{
+    border-collapse: collapse;
+}
+
+th {
+    background-color: var(--theme-accent);
+}
+
+th, td{
+    padding: 6px;
+    color: var(--theme-accent-2);
+}
+
+table, th, td{
+    font-size: var(--font-size);
+    border: 1px solid;
+    border-color: var(--theme-accent-3);
+}
+
 .contents{
     flex-grow: 1;
 }
