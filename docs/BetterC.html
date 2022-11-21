@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Better C</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="blog.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Better C</h1>
+</header>
+<h1>
+UNDEFINED LEAP
+</h1>
+<div class="contents">
+<p><a class='home' href=index.html>HOME</a>
+<button id="btn" onclick="setTheme()">THEME</button></p>
+<hr />
+<h1 id="better-c">Better C</h1>
+<h1 id="wip">WIP!</h1>
+<p>A small guide for C beginners out there to help them write better C
+code.</p>
+<h2 id="void-the-empty-parameter-list">Void the empty parameter
+list</h2>
+<p>In any language other than C, passing arguments to empty function
+parameter list will result in error. So this is valid code in C.</p>
+<pre class="c"><code>void foo(){
+    printf(&quot;hello&quot;);
+}
+
+int main(){
+    foo(5); // Should error!
+    return 0;
+}</code></pre>
+<p>To solve this, we use void to explictly mark the function paramenter
+list as empty.</p>
+<pre class="c"><code>void foo(void){
+    printf(&quot;hello&quot;);
+}
+
+int main(){
+    foo(5); // error: too many arguments to function &#39;foo&#39;
+    return 0;
+}</code></pre>
+<h2 id="stdint.h-stdbool.h">stdint.h, stdbool.h</h2>
+<h3 id="stdint.h">stdint.h</h3>
+<p>Defined in <code>stdint.h</code> header, you can use
+<code>uint_8</code> (unsigned 8bit integer), <code>uint_32</code>
+(unsigned 32bit integer), etc for specific type/size of integer. Of
+course, in stdint.h, they are just typedefs.</p>
+<pre class="c"><code>int main(void){
+    unsigned char y = 5;
+    uint8_t x = 5; // Much cleaner!
+    //....
+}</code></pre>
+<h3 id="stdbool.h">stdbool.h</h3>
+<p>Defined in <code>stdbool.h</code> header, you can use bool as boolean
+type <code>true</code>/<code>false</code>. In stdbool.h, they too are
+just typedef of int.</p>
+<pre class="c"><code>int main(void){
+    int boolean = 1;
+    boolean = 0;
+
+    // Much cleaner!
+    bool x = true;
+    x = false
+}</code></pre>
+<h2 id="use-asserts">Use asserts</h2>
+<p>Assert macro tests expression and terminates the running process. Use
+this to stop your code if it has potential to shoot itself in foot.</p>
+<pre class="c"><code>int main(void){
+    int* x = (int*) malloc(sizeof(int));
+    if(x == NULL){
+        printf(&quot;OOF!&quot;);
+    }
+    some_more_code(x);
+    return 0;
+}</code></pre>
+<p>This is how it usually handled in many courses/tutorials. The problem
+with this is that even if <code>x</code> is NULL, there nothing stoping
+your program from running further, and crashing (or maybe not!) further
+down the line. This will make it harder to debug, even if you put some
+specific printfs. You can solve it by terminating the program with
+assert.</p>
+<pre class="c"><code>#include&lt;assert.h&gt;
+
+int main(void){
+    int* x = (int*) malloc(sizeof(int));
+    assert(x != NULL);
+    some_more_code(x);
+    return 0;
+}</code></pre>
+<p>This will give you nice error:
+<code>Assertion failed: (x != NULL), function main, file main.c, line 5</code>.</p>
+<p>Of course, practically you can choose what to do when malloc fails,
+but it can still be very usefull for, say array’s index out-of-bound
+check, or any place where program should stop where it would result in
+nasty bugs.</p>
+<h2 id="handle-allocs-nulls">Handle alloc’s NULLs</h2>
+<p>Some people might see this one and be like WHAT?!. Well, idk what to
+say, I am including this point because I have seen people (especially C
+beginner) make this mistake, even professor have this in slides (I guess
+this is why).</p>
+<p>You really shouldn’t skip null check for heap memory allocation,
+because allocation can fail for multiple reason, and when it not checked
+properly, then somewhere in your program some code will try to access
+NULL which will result in segmentation fault, and this can be super hard
+to debug.</p>
+<h2 id="null-that-pointer">NULL that pointer</h2>
+<p>After freeing malloc pointer, it better to null it, so that pointer
+which might still point to valid address but have garbage value, don’t
+get accesed. Otherwise it will introduce bug, which is hard to track
+down. Nulling it will give you seg fault on accessing or help
+<code>-fsanitize=undefined,address</code> catch it.</p>
+<pre class="c"><code>int main(void){
+    int* x = (int*) malloc(sizeof(int)*5);
+    assert(x!=NULL);
+    x[1] = 5;
+
+    free(x);
+
+    printf(&quot;%d&quot;, x[1]);// Access is valid (shouldn&#39;t be), but value is garbage!
+
+    return 0;
+}</code></pre>
+<pre class="c"><code>int main(void){
+    int* x = (int*) malloc(sizeof(int)*5);
+    assert(x!=NULL);
+    x[1] = 5;
+
+    free(x);
+    x = NULL;
+
+    printf(&quot;%d&quot;, x[1]);// Seg faults!
+
+    return 0;
+}</code></pre>
+<h2 id="use-debugger-and-address-sanitizer">Use debugger and address
+sanitizer</h2>
+<p>TODO for ARKA</p>
+<ul>
+<li>Use debugger like <a href="https://sourceware.org/gdb/">gdb</a> (<a
+href="https://lldb.llvm.org">lldb</a> for macos) to step through and
+inspect your code.</li>
+<li>To check for memory management related bugs, you can use AddressSans
+or software like valgrind.</li>
+</ul>
+<h2 id="raise-the-flags">Raise the flags</h2>
+<p>TODO for ARKA</p>
+<p>Use flags when compiling to catch potential bugs.</p>
+<p>(Examples are of <code>gcc</code>)</p>
+<ul>
+<li><code>-Wall</code>, enable all warning, all warning that might lead
+to bugs in code.</li>
+<li><code>-Wextra</code>, some extra warnings.</li>
+<li><code>-Werror</code>, treat warning as error, this is to enforce
+that programmer actually fix the warning and not just ignore it.</li>
+<li><code>-pendantic</code>, Enforce ISO C standard, make code more
+portable as different compiler have different implementations.</li>
+<li><code>-fsanitize=undefined</code>, check for undefined behaviour
+according to C standard.</li>
+</ul>
+<script src="highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script>const stylesheet = document.documentElement.style;
+const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
+
+if(!localStorage.getItem("theme")){
+    localStorage.setItem("theme", "system");
+}
+
+if(localStorage.getItem("theme") == "system") setSystemTheme();
+else if(localStorage.getItem("theme") == "light") setLightTheme();
+else if(localStorage.getItem("theme") == "dark") setDarkTheme();
+
+setButtonText();
+
+function setSystemTheme(){
+    if(darkThemeMq.matches){
+        setDarkTheme();
+    }else{
+        setLightTheme();
+    }
+    setButtonText();
+}
+
+function setDarkTheme(){
+    const darkBg = getComputedStyle(document.documentElement).getPropertyValue("--dark-bg");
+    const darkAccent = getComputedStyle(document.documentElement).getPropertyValue("--dark-accent");
+    const darkAccent2 = getComputedStyle(document.documentElement).getPropertyValue("--dark-accent-2");
+    const darkAccent3 = getComputedStyle(document.documentElement).getPropertyValue("--dark-accent-3");
+    stylesheet.setProperty("--theme-bg", darkBg);
+    stylesheet.setProperty("--theme-accent", darkAccent);
+    stylesheet.setProperty("--theme-accent-2", darkAccent2);
+    stylesheet.setProperty("--theme-accent-3", darkAccent3);
+    setButtonText();
+}
+
+function setLightTheme(){
+    const lightBg = getComputedStyle(document.documentElement).getPropertyValue("--light-bg");
+    const lightAccent = getComputedStyle(document.documentElement).getPropertyValue("--light-accent");
+    const lightAccent2 = getComputedStyle(document.documentElement).getPropertyValue("--light-accent-2");
+    const lightAccent3 = getComputedStyle(document.documentElement).getPropertyValue("--light-accent-3");
+    stylesheet.setProperty("--theme-bg", lightBg);
+    stylesheet.setProperty("--theme-accent", lightAccent);
+    stylesheet.setProperty("--theme-accent-2", lightAccent2);
+    stylesheet.setProperty("--theme-accent-3", lightAccent3);
+    setButtonText();
+}
+
+function setButtonText(){
+    const theme = localStorage.getItem("theme");
+    var text = theme.toUpperCase() +' THEME';
+    document.getElementById("btn").innerHTML = text;
+}
+
+darkThemeMq.addListener(e => {
+    if(localStorage.getItem("theme") == "system"){
+        if (e.matches) {
+            setDarkTheme();
+        } else {
+            setLightTheme();
+        }
+    }
+});
+
+function setTheme(){
+    if(localStorage.getItem("theme") == "system"){
+        localStorage.setItem("theme", "light");
+        setLightTheme();
+    }else if(localStorage.getItem("theme") == "light"){
+        localStorage.setItem("theme", "dark");
+        setDarkTheme();
+    }else{
+        localStorage.setItem("theme", "system");
+        setSystemTheme();
+    }
+}</script>
+</div>
+<footer>
+© 2022 members of Undefined Leap
+</footer>
+</body>
+</html>
