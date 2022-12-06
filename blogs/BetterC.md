@@ -1,6 +1,19 @@
 # Better C
 
-# WIP!
+> WIP!
+
+Table Of Contents:
+
+- [Void the empty paramter list](#void-the-empty-paramter-list)
+- [Stdint.h, Stdbool.h](#stdint.h-stdbool.h)
+- [Use asserts](#use-asserts)
+- [Handle alloc's NULLs](#handle-allocs-nulls)
+- [NULL that pointer](#null-that-pointer)
+- [goto](#goto)
+- [Macro like functions](#macro-like-functions)
+- [Variadic functions](#variadic-functions)
+- [Use debugger and address sanitizer](#use-debugger-and-address-sanitizer)
+- [Raise the flags](#raise-the-flags)
 
 A small guide for C beginners out there to help them write better C code.
 
@@ -32,30 +45,27 @@ int main(){
 
 ## stdint.h, stdbool.h
 
-### stdint.h
+- From `stdint.h`, you can use `uint_8` (unsigned 8bit integer), `uint_32` (unsigned 32bit integer), etc, for specific type and size of integer.
+- From `stdbool.h`, you can use `bool` as boolean type `true`/`false`.
 
-Defined in `stdint.h` header, you can use `uint_8` (unsigned 8bit integer), `uint_32` (unsigned 32bit integer), etc for specific type/size of integer. Of course, in stdint.h, they are just typedefs.
+In both of header, they are just typedefs.
 
 ```c
 int main(void){
-    unsigned char y = 5;
-    uint8_t x = 5; // Much cleaner!
-    //....
+    unsigned char x = 5;
+
+    int is_true = 1;
+    is_true = 0;
 }
 ```
 
-### stdbool.h
-
-Defined in `stdbool.h` header, you can use bool as boolean type `true`/`false`. In stdbool.h, they too are just typedef of int.
-
 ```c
 int main(void){
-    int boolean = 1;
-    boolean = 0;
-
     // Much cleaner!
-    bool x = true;
-    x = false
+    uint8_t x = 5;
+
+    bool is_true = true;
+    is_true = false;
 }
 ```
 
@@ -92,13 +102,11 @@ Of course, practically you can choose what to do when malloc fails, but it can s
 
 ## Handle alloc's NULLs
 
-Some people might see this one and be like WHAT?!. Well, idk what to say, I am including this point because I have seen people (especially C beginner) make this mistake, even professor have this in slides (I guess this is why).
-
-You really shouldn't skip null check for heap memory allocation, because allocation can fail for multiple reason, and when it not checked properly, then somewhere in your program some code will try to access NULL which will result in segmentation fault, and this can be super hard to debug.
+One thing that we have observed is that sometimes students doesn't check if `malloc`/`calloc`/etc returns `null` or not. This check shouldn't be skipped, because allocation can fail for multiple reason, and when it not checked properly, then somewhere in your program some code will try to access `null` pointer which will result in segmentation fault. And this can be hard to debug.
 
 ## NULL that pointer
 
-After freeing malloc pointer, it better to null it, so that pointer which might still point to valid address but have garbage value, don't get accesed. Otherwise it will introduce bug, which is hard to track down. Nulling it will give you seg fault on accessing or help `-fsanitize=undefined,address` catch it.
+After freeing malloc pointer, it better to null it, so that pointer which might still point to valid address but have garbage value, don't get accesed. Otherwise it will introduce bug, which is hard to track down. Nulling it will give you seg fault on accessing or let `-fsanitize=undefined,address` flag help catch it.
 
 ```c
 int main(void){
@@ -107,8 +115,10 @@ int main(void){
     x[1] = 5;
 
     free(x);
-
-    printf("%d", x[1]);// Access is valid (shouldn't be), but value is garbage!
+    
+    // Access is valid (shouldn't be!)
+    // x[1] value is garbage!
+    printf("%d", x[1]);
 
     return 0;
 }
@@ -122,22 +132,36 @@ int main(void){
 
     free(x);
     x = NULL;
-
-    printf("%d", x[1]);// Seg faults!
+    
+    // Seg faults!
+    printf("%d", x[1]);
 
     return 0;
 }
 ```
+
+## goto
+
+> TODO
+
+## Macro-like functions
+
+> TODO
+
+## Variadic functions
+
+> TODO
+
 ## Use debugger and address sanitizer
 
-TODO for ARKA
+> TODO
 
 - Use debugger like [gdb](https://sourceware.org/gdb/) ([lldb](https://lldb.llvm.org) for macos) to step through and inspect your code.
 - To check for memory management related bugs, you can use AddressSans or software like valgrind.
 
 ## Raise the flags
 
-TODO for ARKA
+> TODO
 
 Use flags when compiling to catch potential bugs.
 

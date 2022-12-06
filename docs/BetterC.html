@@ -31,7 +31,24 @@ UNDEFINED LEAP
 <button id="btn" onclick="setTheme()">THEME</button></p>
 <hr />
 <h1 id="better-c">Better C</h1>
-<h1 id="wip">WIP!</h1>
+<blockquote>
+<p>WIP!</p>
+</blockquote>
+<p>Table Of Contents:</p>
+<ul>
+<li><a href="#void-the-empty-paramter-list">Void the empty paramter
+list</a></li>
+<li><a href="#stdint.h-stdbool.h">Stdint.h, Stdbool.h</a></li>
+<li><a href="#use-asserts">Use asserts</a></li>
+<li><a href="#handle-allocs-nulls">Handle alloc’s NULLs</a></li>
+<li><a href="#null-that-pointer">NULL that pointer</a></li>
+<li><a href="#goto">goto</a></li>
+<li><a href="#macro-like-functions">Macro like functions</a></li>
+<li><a href="#variadic-functions">Variadic functions</a></li>
+<li><a href="#use-debugger-and-address-sanitizer">Use debugger and
+address sanitizer</a></li>
+<li><a href="#raise-the-flags">Raise the flags</a></li>
+</ul>
 <p>A small guide for C beginners out there to help them write better C
 code.</p>
 <h2 id="void-the-empty-parameter-list">Void the empty parameter
@@ -57,27 +74,26 @@ int main(){
     return 0;
 }</code></pre>
 <h2 id="stdint.h-stdbool.h">stdint.h, stdbool.h</h2>
-<h3 id="stdint.h">stdint.h</h3>
-<p>Defined in <code>stdint.h</code> header, you can use
-<code>uint_8</code> (unsigned 8bit integer), <code>uint_32</code>
-(unsigned 32bit integer), etc for specific type/size of integer. Of
-course, in stdint.h, they are just typedefs.</p>
+<ul>
+<li>From <code>stdint.h</code>, you can use <code>uint_8</code>
+(unsigned 8bit integer), <code>uint_32</code> (unsigned 32bit integer),
+etc, for specific type and size of integer.</li>
+<li>From <code>stdbool.h</code>, you can use <code>bool</code> as
+boolean type <code>true</code>/<code>false</code>.</li>
+</ul>
+<p>In both of header, they are just typedefs.</p>
 <pre class="c"><code>int main(void){
-    unsigned char y = 5;
-    uint8_t x = 5; // Much cleaner!
-    //....
-}</code></pre>
-<h3 id="stdbool.h">stdbool.h</h3>
-<p>Defined in <code>stdbool.h</code> header, you can use bool as boolean
-type <code>true</code>/<code>false</code>. In stdbool.h, they too are
-just typedef of int.</p>
-<pre class="c"><code>int main(void){
-    int boolean = 1;
-    boolean = 0;
+    unsigned char x = 5;
 
+    int is_true = 1;
+    is_true = 0;
+}</code></pre>
+<pre class="c"><code>int main(void){
     // Much cleaner!
-    bool x = true;
-    x = false
+    uint8_t x = 5;
+
+    bool is_true = true;
+    is_true = false;
 }</code></pre>
 <h2 id="use-asserts">Use asserts</h2>
 <p>Assert macro tests expression and terminates the running process. Use
@@ -111,29 +127,29 @@ but it can still be very usefull for, say array’s index out-of-bound
 check, or any place where program should stop where it would result in
 nasty bugs.</p>
 <h2 id="handle-allocs-nulls">Handle alloc’s NULLs</h2>
-<p>Some people might see this one and be like WHAT?!. Well, idk what to
-say, I am including this point because I have seen people (especially C
-beginner) make this mistake, even professor have this in slides (I guess
-this is why).</p>
-<p>You really shouldn’t skip null check for heap memory allocation,
-because allocation can fail for multiple reason, and when it not checked
+<p>One thing that we have observed is that sometimes students doesn’t
+check if <code>malloc</code>/<code>calloc</code>/etc returns
+<code>null</code> or not. This check shouldn’t be skipped, because
+allocation can fail for multiple reason, and when it not checked
 properly, then somewhere in your program some code will try to access
-NULL which will result in segmentation fault, and this can be super hard
-to debug.</p>
+<code>null</code> pointer which will result in segmentation fault. And
+this can be hard to debug.</p>
 <h2 id="null-that-pointer">NULL that pointer</h2>
 <p>After freeing malloc pointer, it better to null it, so that pointer
 which might still point to valid address but have garbage value, don’t
 get accesed. Otherwise it will introduce bug, which is hard to track
-down. Nulling it will give you seg fault on accessing or help
-<code>-fsanitize=undefined,address</code> catch it.</p>
+down. Nulling it will give you seg fault on accessing or let
+<code>-fsanitize=undefined,address</code> flag help catch it.</p>
 <pre class="c"><code>int main(void){
     int* x = (int*) malloc(sizeof(int)*5);
     assert(x!=NULL);
     x[1] = 5;
 
     free(x);
-
-    printf(&quot;%d&quot;, x[1]);// Access is valid (shouldn&#39;t be), but value is garbage!
+    
+    // Access is valid (shouldn&#39;t be!)
+    // x[1] value is garbage!
+    printf(&quot;%d&quot;, x[1]);
 
     return 0;
 }</code></pre>
@@ -144,14 +160,29 @@ down. Nulling it will give you seg fault on accessing or help
 
     free(x);
     x = NULL;
-
-    printf(&quot;%d&quot;, x[1]);// Seg faults!
+    
+    // Seg faults!
+    printf(&quot;%d&quot;, x[1]);
 
     return 0;
 }</code></pre>
+<h2 id="goto">goto</h2>
+<blockquote>
+<p>TODO</p>
+</blockquote>
+<h2 id="macro-like-functions">Macro-like functions</h2>
+<blockquote>
+<p>TODO</p>
+</blockquote>
+<h2 id="variadic-functions">Variadic functions</h2>
+<blockquote>
+<p>TODO</p>
+</blockquote>
 <h2 id="use-debugger-and-address-sanitizer">Use debugger and address
 sanitizer</h2>
-<p>TODO for ARKA</p>
+<blockquote>
+<p>TODO</p>
+</blockquote>
 <ul>
 <li>Use debugger like <a href="https://sourceware.org/gdb/">gdb</a> (<a
 href="https://lldb.llvm.org">lldb</a> for macos) to step through and
@@ -160,7 +191,9 @@ inspect your code.</li>
 or software like valgrind.</li>
 </ul>
 <h2 id="raise-the-flags">Raise the flags</h2>
-<p>TODO for ARKA</p>
+<blockquote>
+<p>TODO</p>
+</blockquote>
 <p>Use flags when compiling to catch potential bugs.</p>
 <p>(Examples are of <code>gcc</code>)</p>
 <ul>
