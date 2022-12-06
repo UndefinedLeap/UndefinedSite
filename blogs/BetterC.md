@@ -12,7 +12,7 @@ Table Of Contents:
 - [goto](#goto)
 - [Macro like functions](#macro-like-functions)
 - [Variadic functions](#variadic-functions)
-- [Use debugger and address sanitizer](#use-debugger-and-address-sanitizer)
+- [Use debugger](#use-debugger)
 - [Raise the flags](#raise-the-flags)
 
 A small guide for C beginners out there to help them write better C code.
@@ -152,12 +152,19 @@ int main(void){
 
 > TODO
 
-## Use debugger and address sanitizer
+## Use debugger
 
-> TODO
+Beginners nowadays just use `printf` to check the code states and variable to debug their projects. The problem with this is that it hard to properly read the states and variables even if you have very pretty `printf` messages. Even if you do, you would be spending much of your time copy-pasting `printf` and editing them. This make them pretty counter-productive.
 
-- Use debugger like [gdb](https://sourceware.org/gdb/) ([lldb](https://lldb.llvm.org) for macos) to step through and inspect your code.
-- To check for memory management related bugs, you can use AddressSans or software like valgrind.
+Beginners should try to get their hand dirty with debuggers like [gdb](https://sourceware.org/gdb/)/[lldb](https://lldb.llvm.org) even if it take some time out of their free time. Because, once you get used to debuggers, you can easily debug your code without wasting time.
+
+Another amazing usecase for debugger is that you can use it to explore and get familiar with new codebase, as you can check the execution flow easily.
+
+> You like printf debugging? 
+> 
+> Introducing a tool called the Debugger. It automatically adds printf debug for every variable in your code base and collects that info into a nice UI. You can pause the execution, continue it and step one line at a time to see your execution flow.
+> 
+> -[Sebastian Aaltonen](https://twitter.com/SebAaltonen/status/1571039580908040192)
 
 ## Raise the flags
 
@@ -172,3 +179,8 @@ Use flags when compiling to catch potential bugs.
 - `-Werror`, treat warning as error, this is to enforce that programmer actually fix the warning and not just ignore it.
 - `-pendantic`, Enforce ISO C standard, make code more portable as different compiler have different implementations.
 - `-fsanitize=undefined`, check for undefined behaviour according to C standard.
+
+> TODO: Use below links and update `-fsanitize=<a>,<b>,<etc>` point.
+> 
+> https://www.osc.edu/resources/getting_started/howto/howto_use_address_sanitizer
+> https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html

@@ -45,8 +45,7 @@ list</a></li>
 <li><a href="#goto">goto</a></li>
 <li><a href="#macro-like-functions">Macro like functions</a></li>
 <li><a href="#variadic-functions">Variadic functions</a></li>
-<li><a href="#use-debugger-and-address-sanitizer">Use debugger and
-address sanitizer</a></li>
+<li><a href="#use-debugger">Use debugger</a></li>
 <li><a href="#raise-the-flags">Raise the flags</a></li>
 </ul>
 <p>A small guide for C beginners out there to help them write better C
@@ -178,18 +177,31 @@ down. Nulling it will give you seg fault on accessing or let
 <blockquote>
 <p>TODO</p>
 </blockquote>
-<h2 id="use-debugger-and-address-sanitizer">Use debugger and address
-sanitizer</h2>
+<h2 id="use-debugger">Use debugger</h2>
+<p>Beginners nowadays just use <code>printf</code> to check the code
+states and variable to debug their projects. The problem with this is
+that it hard to properly read the states and variables even if you have
+very pretty <code>printf</code> messages. Even if you do, you would be
+spending much of your time copy-pasting <code>printf</code> and editing
+them. This make them pretty counter-productive.</p>
+<p>Beginners should try to get their hand dirty with debuggers like <a
+href="https://sourceware.org/gdb/">gdb</a>/<a
+href="https://lldb.llvm.org">lldb</a> even if it take some time out of
+their free time. Because, once you get used to debuggers, you can easily
+debug your code without wasting time.</p>
+<p>Another amazing usecase for debugger is that you can use it to
+explore and get familiar with new codebase, as you can check the
+execution flow easily.</p>
 <blockquote>
-<p>TODO</p>
+<p>You like printf debugging?</p>
+<p>Introducing a tool called the Debugger. It automatically adds printf
+debug for every variable in your code base and collects that info into a
+nice UI. You can pause the execution, continue it and step one line at a
+time to see your execution flow.</p>
+<p>-<a
+href="https://twitter.com/SebAaltonen/status/1571039580908040192">Sebastian
+Aaltonen</a></p>
 </blockquote>
-<ul>
-<li>Use debugger like <a href="https://sourceware.org/gdb/">gdb</a> (<a
-href="https://lldb.llvm.org">lldb</a> for macos) to step through and
-inspect your code.</li>
-<li>To check for memory management related bugs, you can use AddressSans
-or software like valgrind.</li>
-</ul>
 <h2 id="raise-the-flags">Raise the flags</h2>
 <blockquote>
 <p>TODO</p>
@@ -207,6 +219,12 @@ portable as different compiler have different implementations.</li>
 <li><code>-fsanitize=undefined</code>, check for undefined behaviour
 according to C standard.</li>
 </ul>
+<blockquote>
+<p>TODO: Use below links and update
+<code>-fsanitize=&lt;a&gt;,&lt;b&gt;,&lt;etc&gt;</code> point.</p>
+<p>https://www.osc.edu/resources/getting_started/howto/howto_use_address_sanitizer
+https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html</p>
+</blockquote>
 <script src="highlight.min.js"></script>
 <script>hljs.highlightAll();</script>
 <script>const stylesheet = document.documentElement.style;
