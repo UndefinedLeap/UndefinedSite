@@ -45,7 +45,7 @@ int main(){
 
 ## stdint.h, stdbool.h
 
-- From `stdint.h`, you can use `uint_8` (unsigned 8bit integer), `uint_32` (unsigned 32bit integer), etc, for specific type and size of integer.
+- From `stdint.h`, you can use `uint8_t` (unsigned 8bit integer), `uint32_t` (unsigned 32bit integer), etc, for specific type and size of integer.
 - From `stdbool.h`, you can use `bool` as boolean type `true`/`false`.
 
 In both of header, they are just typedefs.
