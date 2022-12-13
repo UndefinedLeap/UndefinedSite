@@ -36,22 +36,29 @@ UNDEFINED LEAP
 </blockquote>
 <p>Table Of Contents:</p>
 <ul>
-<li><a href="#void-the-empty-paramter-list">Void the empty paramter
-list</a></li>
-<li><a href="#stdint.h-stdbool.h">Stdint.h, Stdbool.h</a></li>
-<li><a href="#use-asserts">Use asserts</a></li>
-<li><a href="#handle-allocs-nulls">Handle alloc’s NULLs</a></li>
-<li><a href="#null-that-pointer">NULL that pointer</a></li>
+<li>Source code level:
+<ul>
+<li><a href="#empty-paramter-list">Empty Parameter List</a></li>
+<li><a href="#ints-and-bools">Ints and Bools</a></li>
+<li><a href="#asserts">Asserts</a></li>
+<li><a href="#allocation-returns">Allocation returns</a></li>
+<li><a href="#nulling-the-pointer">NULLing the pointer</a></li>
 <li><a href="#goto">goto</a></li>
 <li><a href="#macro-like-functions">Macro like functions</a></li>
 <li><a href="#variadic-functions">Variadic functions</a></li>
+</ul></li>
+<li>Compiler level:
+<ul>
+<li><a href="#flags">Flags</a></li>
+</ul></li>
+<li>Tools level:
+<ul>
 <li><a href="#use-debugger">Use debugger</a></li>
-<li><a href="#raise-the-flags">Raise the flags</a></li>
+</ul></li>
 </ul>
-<p>A small guide for C beginners out there to help them write better C
-code.</p>
-<h2 id="void-the-empty-parameter-list">Void the empty parameter
-list</h2>
+<h2 id="source-code-level">Source code level</h2>
+<hr />
+<h3 id="empty-parameter-list">Empty Parameter List</h3>
 <p>In any language other than C, passing arguments to empty function
 parameter list will result in error. So this is valid code in C.</p>
 <pre class="c"><code>void foo(){
@@ -72,7 +79,7 @@ int main(){
     foo(5); // error: too many arguments to function &#39;foo&#39;
     return 0;
 }</code></pre>
-<h2 id="stdint.h-stdbool.h">stdint.h, stdbool.h</h2>
+<h3 id="ints-and-bools">Ints and Bools</h3>
 <ul>
 <li>From <code>stdint.h</code>, you can use <code>uint8_t</code>
 (unsigned 8bit integer), <code>uint32_t</code> (unsigned 32bit integer),
@@ -94,7 +101,7 @@ boolean type <code>true</code>/<code>false</code>.</li>
     bool is_true = true;
     is_true = false;
 }</code></pre>
-<h2 id="use-asserts">Use asserts</h2>
+<h3 id="asserts">Asserts</h3>
 <p>Assert macro tests expression and terminates the running process. Use
 this to stop your code if it has potential to shoot itself in foot.</p>
 <pre class="c"><code>int main(void){
@@ -125,7 +132,11 @@ int main(void){
 but it can still be very usefull for, say array’s index out-of-bound
 check, or any place where program should stop where it would result in
 nasty bugs.</p>
-<h2 id="handle-allocs-nulls">Handle alloc’s NULLs</h2>
+<h3 id="allocation-returns">Allocation returns</h3>
+<blockquote>
+<p>TODO: Merge it with
+<code>Never ignore the return value of a function.</code> point</p>
+</blockquote>
 <p>One thing that we have observed is that sometimes students doesn’t
 check if <code>malloc</code>/<code>calloc</code>/etc returns
 <code>null</code> or not. This check shouldn’t be skipped, because
@@ -133,7 +144,7 @@ allocation can fail for multiple reason, and when it not checked
 properly, then somewhere in your program some code will try to access
 <code>null</code> pointer which will result in segmentation fault. And
 this can be hard to debug.</p>
-<h2 id="null-that-pointer">NULL that pointer</h2>
+<h3 id="nulling-the-pointer">NULLing the pointer</h3>
 <p>After freeing malloc pointer, it better to null it, so that pointer
 which might still point to valid address but have garbage value, don’t
 get accesed. Otherwise it will introduce bug, which is hard to track
@@ -165,19 +176,50 @@ down. Nulling it will give you seg fault on accessing or let
 
     return 0;
 }</code></pre>
-<h2 id="goto">goto</h2>
+<h3 id="goto">goto</h3>
 <blockquote>
 <p>TODO</p>
 </blockquote>
-<h2 id="macro-like-functions">Macro-like functions</h2>
+<h3 id="macro-like-functions">Macro-like functions</h3>
 <blockquote>
 <p>TODO</p>
 </blockquote>
-<h2 id="variadic-functions">Variadic functions</h2>
+<h3 id="variadic-functions">Variadic functions</h3>
 <blockquote>
 <p>TODO</p>
 </blockquote>
-<h2 id="use-debugger">Use debugger</h2>
+<h2 id="compiler-level">Compiler level</h2>
+<hr />
+<h3 id="flags">Flags</h3>
+<blockquote>
+<p>TODO</p>
+</blockquote>
+<p>Use flags when compiling to catch potential bugs.</p>
+<p>(Examples are of <code>gcc</code>)</p>
+<ul>
+<li><p><code>-Wall</code>, enable all warning, all warning that might
+lead to bugs in code.</p></li>
+<li><p><code>-Wextra</code>, some extra warnings.</p></li>
+<li><p><code>-Werror</code>, treat warning as error, this is to enforce
+that programmer actually fix the warning and not just ignore
+it.</p></li>
+<li><p><code>-Wpendantic</code>, Enforce ISO C standard, make code more
+portable as different compiler have different implementations.</p></li>
+<li><p><code>-fsanitize=undefined</code>, check for undefined behaviour
+according to C standard.</p></li>
+<li><p><code>-Wconversion</code></p></li>
+<li><p><code>-Wshadow</code></p></li>
+<li><p><code>-std=cxx</code></p></li>
+</ul>
+<blockquote>
+<p>TODO: Use below links and update
+<code>-fsanitize=&lt;a&gt;,&lt;b&gt;,&lt;etc&gt;</code> point.</p>
+<p>https://www.osc.edu/resources/getting_started/howto/howto_use_address_sanitizer
+https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html</p>
+</blockquote>
+<h2 id="tools-level">Tools level</h2>
+<hr />
+<h3 id="use-debugger">Use debugger</h3>
 <p>Beginners nowadays just use <code>printf</code> to check the code
 states and variable to debug their projects. The problem with this is
 that it hard to properly read the states and variables even if you have
@@ -201,29 +243,6 @@ time to see your execution flow.</p>
 <p>-<a
 href="https://twitter.com/SebAaltonen/status/1571039580908040192">Sebastian
 Aaltonen</a></p>
-</blockquote>
-<h2 id="raise-the-flags">Raise the flags</h2>
-<blockquote>
-<p>TODO</p>
-</blockquote>
-<p>Use flags when compiling to catch potential bugs.</p>
-<p>(Examples are of <code>gcc</code>)</p>
-<ul>
-<li><code>-Wall</code>, enable all warning, all warning that might lead
-to bugs in code.</li>
-<li><code>-Wextra</code>, some extra warnings.</li>
-<li><code>-Werror</code>, treat warning as error, this is to enforce
-that programmer actually fix the warning and not just ignore it.</li>
-<li><code>-pendantic</code>, Enforce ISO C standard, make code more
-portable as different compiler have different implementations.</li>
-<li><code>-fsanitize=undefined</code>, check for undefined behaviour
-according to C standard.</li>
-</ul>
-<blockquote>
-<p>TODO: Use below links and update
-<code>-fsanitize=&lt;a&gt;,&lt;b&gt;,&lt;etc&gt;</code> point.</p>
-<p>https://www.osc.edu/resources/getting_started/howto/howto_use_address_sanitizer
-https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html</p>
 </blockquote>
 <script src="highlight.min.js"></script>
 <script>hljs.highlightAll();</script>

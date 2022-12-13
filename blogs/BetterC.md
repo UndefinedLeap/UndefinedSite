@@ -4,20 +4,27 @@
 
 Table Of Contents:
 
-- [Void the empty paramter list](#void-the-empty-paramter-list)
-- [Stdint.h, Stdbool.h](#stdint.h-stdbool.h)
-- [Use asserts](#use-asserts)
-- [Handle alloc's NULLs](#handle-allocs-nulls)
-- [NULL that pointer](#null-that-pointer)
-- [goto](#goto)
-- [Macro like functions](#macro-like-functions)
-- [Variadic functions](#variadic-functions)
-- [Use debugger](#use-debugger)
-- [Raise the flags](#raise-the-flags)
+- Source code level:
+    - [Empty Parameter List](#empty-paramter-list)
+    - [Ints and Bools](#ints-and-bools)
+    - [Asserts](#asserts)
+    - [Allocation returns](#allocation-returns)
+    - [NULLing the pointer](#nulling-the-pointer)
+    - [goto](#goto)
+    - [Macro like functions](#macro-like-functions)
+    - [Variadic functions](#variadic-functions)
+    
+- Compiler level:
+    - [Flags](#flags)
+    
+- Tools level:
+    - [Use debugger](#use-debugger)
 
-A small guide for C beginners out there to help them write better C code.
+## Source code level
 
-## Void the empty parameter list
+---
+
+### Empty Parameter List
 
 In any language other than C, passing arguments to empty function parameter list will result in error. So this is valid code in C.
 
@@ -43,7 +50,7 @@ int main(){
 }
 ```
 
-## stdint.h, stdbool.h
+### Ints and Bools
 
 - From `stdint.h`, you can use `uint8_t` (unsigned 8bit integer), `uint32_t` (unsigned 32bit integer), etc, for specific type and size of integer.
 - From `stdbool.h`, you can use `bool` as boolean type `true`/`false`.
@@ -69,7 +76,7 @@ int main(void){
 }
 ```
 
-## Use asserts
+### Asserts
 
 Assert macro tests expression and terminates the running process. Use this to stop your code if it has potential to shoot itself in foot.
 
@@ -100,11 +107,13 @@ This will give you nice error: `Assertion failed: (x != NULL), function main, fi
 
 Of course, practically you can choose what to do when malloc fails, but it can still be very usefull for, say array's index out-of-bound check, or any place where program should stop where it would result in nasty bugs.
 
-## Handle alloc's NULLs
+### Allocation returns
+
+> TODO: Merge it with `Never ignore the return value of a function.` point
 
 One thing that we have observed is that sometimes students doesn't check if `malloc`/`calloc`/etc returns `null` or not. This check shouldn't be skipped, because allocation can fail for multiple reason, and when it not checked properly, then somewhere in your program some code will try to access `null` pointer which will result in segmentation fault. And this can be hard to debug.
 
-## NULL that pointer
+### NULLing the pointer
 
 After freeing malloc pointer, it better to null it, so that pointer which might still point to valid address but have garbage value, don't get accesed. Otherwise it will introduce bug, which is hard to track down. Nulling it will give you seg fault on accessing or let `-fsanitize=undefined,address` flag help catch it.
 
@@ -140,19 +149,50 @@ int main(void){
 }
 ```
 
-## goto
+### goto
 
 > TODO
 
-## Macro-like functions
+### Macro-like functions
 
 > TODO
 
-## Variadic functions
+### Variadic functions
 
 > TODO
 
-## Use debugger
+## Compiler level
+
+---
+
+### Flags
+
+> TODO
+
+Use flags when compiling to catch potential bugs.
+
+(Examples are of `gcc`)
+
+- `-Wall`, enable all warning, all warning that might lead to bugs in code.
+- `-Wextra`, some extra warnings.
+- `-Werror`, treat warning as error, this is to enforce that programmer actually fix the warning and not just ignore it.
+- `-Wpendantic`, Enforce ISO C standard, make code more portable as different compiler have different implementations.
+- `-fsanitize=undefined`, check for undefined behaviour according to C standard.
+
+- `-Wconversion`
+- `-Wshadow`
+- `-std=cxx`
+
+> TODO: Use below links and update `-fsanitize=<a>,<b>,<etc>` point.
+> 
+> https://www.osc.edu/resources/getting_started/howto/howto_use_address_sanitizer
+> https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html
+
+## Tools level
+
+---
+
+### Use debugger
 
 Beginners nowadays just use `printf` to check the code states and variable to debug their projects. The problem with this is that it hard to properly read the states and variables even if you have very pretty `printf` messages. Even if you do, you would be spending much of your time copy-pasting `printf` and editing them. This make them pretty counter-productive.
 
@@ -165,22 +205,3 @@ Another amazing usecase for debugger is that you can use it to explore and get f
 > Introducing a tool called the Debugger. It automatically adds printf debug for every variable in your code base and collects that info into a nice UI. You can pause the execution, continue it and step one line at a time to see your execution flow.
 > 
 > -[Sebastian Aaltonen](https://twitter.com/SebAaltonen/status/1571039580908040192)
-
-## Raise the flags
-
-> TODO
-
-Use flags when compiling to catch potential bugs.
-
-(Examples are of `gcc`)
-
-- `-Wall`, enable all warning, all warning that might lead to bugs in code.
-- `-Wextra`, some extra warnings.
-- `-Werror`, treat warning as error, this is to enforce that programmer actually fix the warning and not just ignore it.
-- `-pendantic`, Enforce ISO C standard, make code more portable as different compiler have different implementations.
-- `-fsanitize=undefined`, check for undefined behaviour according to C standard.
-
-> TODO: Use below links and update `-fsanitize=<a>,<b>,<etc>` point.
-> 
-> https://www.osc.edu/resources/getting_started/howto/howto_use_address_sanitizer
-> https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html
