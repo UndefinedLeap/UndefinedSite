@@ -8,7 +8,7 @@ Table Of Contents:
     - [Empty Parameter List](#empty-paramter-list)
     - [Ints and Bools](#ints-and-bools)
     - [Asserts](#asserts)
-    - [Allocation returns](#allocation-returns)
+    - [Return value of function](#return-value-of-function)
     - [NULLing the pointer](#nulling-the-pointer)
     - [goto](#goto)
     - [Macro like functions](#macro-like-functions)
@@ -110,11 +110,9 @@ Assertion failed: (x != NULL), function main, file main.c, line 5
 
 Of course, practically you can choose what to do when malloc fails, but it can still be very usefull for, say array's index out-of-bound check, or any place where program should stop where it would result in nasty bugs.
 
-### Allocation returns
+### Return value of function
 
-> TODO: Merge it with `Never ignore the return value of a function.` point
-
-One thing that we have observed is that sometimes students doesn't check if `malloc`/`calloc`/etc returns `null` or not. This check shouldn't be skipped, because allocation can fail for multiple reason, and when it not checked properly, then somewhere in your program some code will try to access `null` pointer which will result in segmentation fault. And this can be hard to debug.
+One thing that we have observed is that sometimes students doesn't check return value of functions (especially of standard library). This check shouldn't be skipped, because the function can report failure by returning `NULL`, `-1` or some error enum. And when it not checked, then somewhere in your program you will miss this error and become annoyed and frustrated.
 
 ### NULLing the pointer
 

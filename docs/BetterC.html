@@ -41,7 +41,8 @@ UNDEFINED LEAP
 <li><a href="#empty-paramter-list">Empty Parameter List</a></li>
 <li><a href="#ints-and-bools">Ints and Bools</a></li>
 <li><a href="#asserts">Asserts</a></li>
-<li><a href="#allocation-returns">Allocation returns</a></li>
+<li><a href="#return-value-of-function">Return value of
+function</a></li>
 <li><a href="#nulling-the-pointer">NULLing the pointer</a></li>
 <li><a href="#goto">goto</a></li>
 <li><a href="#macro-like-functions">Macro like functions</a></li>
@@ -132,18 +133,13 @@ int main(void){
 but it can still be very usefull for, say array’s index out-of-bound
 check, or any place where program should stop where it would result in
 nasty bugs.</p>
-<h3 id="allocation-returns">Allocation returns</h3>
-<blockquote>
-<p>TODO: Merge it with
-<code>Never ignore the return value of a function.</code> point</p>
-</blockquote>
+<h3 id="return-value-of-function">Return value of function</h3>
 <p>One thing that we have observed is that sometimes students doesn’t
-check if <code>malloc</code>/<code>calloc</code>/etc returns
-<code>null</code> or not. This check shouldn’t be skipped, because
-allocation can fail for multiple reason, and when it not checked
-properly, then somewhere in your program some code will try to access
-<code>null</code> pointer which will result in segmentation fault. And
-this can be hard to debug.</p>
+check return value of functions (especially of standard library). This
+check shouldn’t be skipped, because the function can report failure by
+returning <code>NULL</code>, <code>-1</code> or some error enum. And
+when it not checked, then somewhere in your program you will miss this
+error and become annoyed and frustrated.</p>
 <h3 id="nulling-the-pointer">NULLing the pointer</h3>
 <p>After freeing malloc pointer, it better to null it, so that pointer
 which might still point to valid address but have garbage value, don’t
