@@ -219,8 +219,6 @@ int main(void){
 
 ### Flags
 
-> TODO
-
 Use flags when compiling to catch potential bugs.
 
 (Examples are of `gcc`)
@@ -250,8 +248,10 @@ Beginners should try to get their hand dirty with debuggers like [gdb](https://s
 
 Another amazing usecase for debugger is that you can use it to explore and get familiar with new codebase, as you can check the execution flow easily.
 
-> You like printf debugging? 
-> 
+> You like printf debugging?
+>
+<br>
 > Introducing a tool called the Debugger. It automatically adds printf debug for every variable in your code base and collects that info into a nice UI. You can pause the execution, continue it and step one line at a time to see your execution flow.
-> 
+>
+<br>
 > -[Sebastian Aaltonen](https://twitter.com/SebAaltonen/status/1571039580908040192)
