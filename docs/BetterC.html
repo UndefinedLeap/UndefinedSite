@@ -126,8 +126,8 @@ int main(void){
     some_more_code(x);
     return 0;
 }</code></pre>
-<p>This will give you nice error:
-<code>Assertion failed: (x != NULL), function main, file main.c, line 5</code>.</p>
+<p>This will give you nice error:</p>
+<pre class="txt"><code>Assertion failed: (x != NULL), function main, file main.c, line 5</code></pre>
 <p>Of course, practically you can choose what to do when malloc fails,
 but it can still be very usefull for, say array’s index out-of-bound
 check, or any place where program should stop where it would result in

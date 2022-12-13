@@ -103,7 +103,10 @@ int main(void){
     return 0;
 }
 ```
-This will give you nice error: `Assertion failed: (x != NULL), function main, file main.c, line 5`.
+This will give you nice error:
+```txt
+Assertion failed: (x != NULL), function main, file main.c, line 5
+```
 
 Of course, practically you can choose what to do when malloc fails, but it can still be very usefull for, say array's index out-of-bound check, or any place where program should stop where it would result in nasty bugs.
 
