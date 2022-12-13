@@ -233,26 +233,31 @@ int main(void){
 <p>Use flags when compiling to catch potential bugs.</p>
 <p>(Examples are of <code>gcc</code>)</p>
 <ul>
-<li><p><code>-Wall</code>, enable all warning, all warning that might
-lead to bugs in code.</p></li>
-<li><p><code>-Wextra</code>, some extra warnings.</p></li>
-<li><p><code>-Werror</code>, treat warning as error, this is to enforce
-that programmer actually fix the warning and not just ignore
-it.</p></li>
-<li><p><code>-Wpendantic</code>, Enforce ISO C standard, make code more
-portable as different compiler have different implementations.</p></li>
-<li><p><code>-fsanitize=undefined</code>, check for undefined behaviour
-according to C standard.</p></li>
-<li><p><code>-Wconversion</code></p></li>
-<li><p><code>-Wshadow</code></p></li>
-<li><p><code>-std=cxx</code></p></li>
+<li><code>-Wall</code>, enable all warning, all warning that might lead
+to bugs in code.</li>
+<li><code>-Wextra</code>, some extra warnings.</li>
+<li><code>-Werror</code>, treat warning as error, this is to enforce
+that programmer actually fix the warning and not just ignore it.</li>
+<li><code>-Wpendantic</code>, Enforce ISO C standard, make code more
+portable as different compiler have different implementations.</li>
+<li><code>-Wconversion</code>, warn when invalid conversion between
+int/float/double and of different size occurs.</li>
+<li><code>-Wshadow</code>, warn when variable shadows previously
+declared variables.</li>
+<li><code>-std=cxx</code>, uses <code>cxx</code> compiler, so that code
+conform to that particular ISO C standard.</li>
+<li><code>-fsanitize=&lt;a&gt;,&lt;b&gt;,&lt;c&gt;</code>, use santizer
+to catch bugs.
+<ul>
+<li><code>-fsanitize=undefined</code>, check for undefined
+behaviour.</li>
+<li><code>-fsanitize=address</code>, check for out-of-bounds and
+use-after-free bugs.</li>
+<li><code>-fsanitize=leak</code>, check for memory leaks.</li>
+<li><a
+href="https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html">more</a></li>
+</ul></li>
 </ul>
-<blockquote>
-<p>TODO: Use below links and update
-<code>-fsanitize=&lt;a&gt;,&lt;b&gt;,&lt;etc&gt;</code> point.</p>
-<p>https://www.osc.edu/resources/getting_started/howto/howto_use_address_sanitizer
-https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html</p>
-</blockquote>
 <h2 id="tools-level">Tools level</h2>
 <hr />
 <h3 id="use-debugger">Use debugger</h3>

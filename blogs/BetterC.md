@@ -229,16 +229,14 @@ Use flags when compiling to catch potential bugs.
 - `-Wextra`, some extra warnings.
 - `-Werror`, treat warning as error, this is to enforce that programmer actually fix the warning and not just ignore it.
 - `-Wpendantic`, Enforce ISO C standard, make code more portable as different compiler have different implementations.
-- `-fsanitize=undefined`, check for undefined behaviour according to C standard.
-
-- `-Wconversion`
-- `-Wshadow`
-- `-std=cxx`
-
-> TODO: Use below links and update `-fsanitize=<a>,<b>,<etc>` point.
-> 
-> https://www.osc.edu/resources/getting_started/howto/howto_use_address_sanitizer
-> https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html
+- `-Wconversion`, warn when invalid conversion between int/float/double and of different size occurs.
+- `-Wshadow`, warn when variable shadows previously declared variables.
+- `-std=cxx`, uses `cxx` compiler, so that code conform to that particular ISO C standard.
+- `-fsanitize=<a>,<b>,<c>`, use santizer to catch bugs.
+    - `-fsanitize=undefined`, check for undefined behaviour.
+    - `-fsanitize=address`, check for out-of-bounds and use-after-free bugs.
+    - `-fsanitize=leak`, check for memory leaks.
+    - [more](https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html)
 
 ## Tools level
 
