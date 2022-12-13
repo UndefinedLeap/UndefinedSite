@@ -177,9 +177,49 @@ down. Nulling it will give you seg fault on accessing or let
     return 0;
 }</code></pre>
 <h3 id="goto">goto</h3>
-<blockquote>
-<p>TODO</p>
-</blockquote>
+<p>The <code>goto</code> keyword let the program jumps to a labelled
+statement.</p>
+<pre class="c"><code>int main(void){
+    printf(&quot;hello&quot;);
+    goto world;
+    printf(&quot; bye!&quot;);
+    world:
+        printf(&quot; world!&quot;);
+    return 0;
+}</code></pre>
+<pre class="txt"><code>hello world!</code></pre>
+<p>While it might be tempting to use goto for some complex control
+flows, not only it’s complicated jumping from here and there but also
+it’s <code>fall-through</code> behaviour like <code>switch</code>
+statement, will make it really hard to be handled.</p>
+<pre class="c"><code>int main(void){
+    printf(&quot;hello&quot;);
+    goto world;
+    world:
+        printf(&quot; world!&quot;);
+    bye:
+        printf(&quot; bye!&quot;);
+    return 0;
+}</code></pre>
+<pre class="txt"><code>hello world! bye!</code></pre>
+<p>So, if you absolutely have to use goto, use it as defer mechanism to
+handle errors. Otherwise, there might be code smell in whatever you are
+trying to do.</p>
+<pre class="c"><code>#include&lt;errno.h&gt;
+
+// A way to handle errors with goto
+int main(void){
+    FILE* file_txt = fopen(&quot;file.txt&quot;, &quot;w&quot;);
+    if(file_txt == NULL) goto err;
+    
+    fprintf(file_txt, &quot;TEST!\n&quot;);
+    
+    fclose(file_txt);
+    
+    err:
+        printf(&quot;Error %s encountered!&quot;, strerror(errno));
+    return 0;
+}</code></pre>
 <h3 id="macro-like-functions">Macro-like functions</h3>
 <blockquote>
 <p>TODO</p>

@@ -151,7 +151,58 @@ int main(void){
 
 ### goto
 
-> TODO
+The `goto` keyword let the program jumps to a labelled statement.
+
+```c
+int main(void){
+    printf("hello");
+    goto world;
+    printf(" bye!");
+    world:
+        printf(" world!");
+    return 0;
+}
+```
+```txt
+hello world!
+```
+
+While it might be tempting to use goto for some complex control flows, not only it's complicated jumping from here and there but also it's `fall-through` behaviour like `switch` statement, will make it really hard to be handled.
+
+```c
+int main(void){
+    printf("hello");
+    goto world;
+    world:
+        printf(" world!");
+    bye:
+        printf(" bye!");
+    return 0;
+}
+```
+```txt
+hello world! bye!
+```
+
+So, if you absolutely have to use goto, use it as defer mechanism to handle errors. Otherwise, there might be code smell in whatever you are trying to do.
+
+```c
+#include<errno.h>
+
+// A way to handle errors with goto
+int main(void){
+    FILE* file_txt = fopen("file.txt", "w");
+    if(file_txt == NULL) goto err;
+    
+    fprintf(file_txt, "TEST!\n");
+    
+    fclose(file_txt);
+    
+    err:
+        printf("Error %s encountered!", strerror(errno));
+    return 0;
+}
+```
 
 ### Macro-like functions
 
