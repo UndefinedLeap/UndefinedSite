@@ -45,8 +45,7 @@ UNDEFINED LEAP
 function</a></li>
 <li><a href="#nulling-the-pointer">NULLing the pointer</a></li>
 <li><a href="#goto">goto</a></li>
-<li><a href="#macro-like-functions">Macro like functions</a></li>
-<li><a href="#variadic-functions">Variadic functions</a></li>
+<li><a href="#etc">Etc</a></li>
 </ul></li>
 <li>Compiler level:
 <ul>
@@ -216,14 +215,16 @@ int main(void){
         printf(&quot;Error %s encountered!&quot;, strerror(errno));
     return 0;
 }</code></pre>
-<h3 id="macro-like-functions">Macro-like functions</h3>
-<blockquote>
-<p>TODO</p>
-</blockquote>
-<h3 id="variadic-functions">Variadic functions</h3>
-<blockquote>
-<p>TODO</p>
-</blockquote>
+<h3 id="etc">Etc</h3>
+<ul>
+<li><p>Function-like macros: This should only be used if your functions
+are small, because macros (pre-processor) basically just do copy-paste
+and since pre-processor doesn’t understand anything about language, it
+will result buggy code that is hard to debug.</p></li>
+<li><p>Variadic functions: This should be strictly avoided as it doesn’t
+have any type-safety and this can easily break your program or
+introducte security vulnerability.</p></li>
+</ul>
 <h2 id="compiler-level">Compiler level</h2>
 <hr />
 <h3 id="flags">Flags</h3>

@@ -11,8 +11,7 @@ Table Of Contents:
     - [Return value of function](#return-value-of-function)
     - [NULLing the pointer](#nulling-the-pointer)
     - [goto](#goto)
-    - [Macro like functions](#macro-like-functions)
-    - [Variadic functions](#variadic-functions)
+    - [Etc](#etc)
     
 - Compiler level:
     - [Flags](#flags)
@@ -204,14 +203,11 @@ int main(void){
     return 0;
 }
 ```
+### Etc
 
-### Macro-like functions
+- Function-like macros: This should only be used if your functions are small, because macros (pre-processor) basically just do copy-paste and since pre-processor doesn't understand anything about language, it will result buggy code that is hard to debug.
 
-> TODO
-
-### Variadic functions
-
-> TODO
+- Variadic functions: This should be strictly avoided as it doesn't have any type-safety and this can easily break your program or introducte security vulnerability.
 
 ## Compiler level
 
