@@ -1,7 +1,5 @@
 # Better C
 
-> WIP!
-
 Table Of Contents:
 
 - Source code level:
@@ -25,7 +23,7 @@ Table Of Contents:
 
 ### Empty Parameter List
 
-In any language other than C, passing arguments to empty function parameter list will result in error. So this is valid code in C.
+In any language other than C, passing arguments to an empty function parameter list will result in an error. So this is a valid code in C.
 
 ```c
 void foo(){
@@ -77,7 +75,7 @@ int main(void){
 
 ### Asserts
 
-Assert macro tests expression and terminates the running process. Use this to stop your code if it has potential to shoot itself in foot.
+Assert macro tests expression and terminates the running process. Use this to stop your code if it has the potential to shoot itself in the foot.
 
 ```c
 int main(void){
@@ -90,7 +88,7 @@ int main(void){
 }
 ```
 
-This is how it usually handled in many courses/tutorials. The problem with this is that even if `x` is NULL, there nothing stoping your program from running further, and crashing (or maybe not!) further down the line. This will make it harder to debug, even if you put some specific printfs. You can solve it by terminating the program with assert.
+Above is how many courses/tutorials check malloc's NULL. The problem with this is that even if `x` is NULL, your program will continue to run and crash further down the line. It will become harder to debug, even if you put pretty printfs. You can solve it by terminating the program with assert.
 
 ```c
 #include<assert.h>
@@ -107,15 +105,15 @@ This will give you nice error:
 Assertion failed: (x != NULL), function main, file main.c, line 5
 ```
 
-Of course, practically you can choose what to do when malloc fails, but it can still be very usefull for, say array's index out-of-bound check, or any place where program should stop where it would result in nasty bugs.
+Of course, you can choose what to do when malloc fails, but it can still be useful for, say, index out-of-bound checks or any other place where the program should stop.
 
 ### Return value of function
 
-One thing that we have observed is that sometimes students doesn't check return value of functions (especially of standard library). This check shouldn't be skipped, because the function can report failure by returning `NULL`, `-1` or some error enum. And when it not checked, then somewhere in your program you will miss this error and become annoyed and frustrated.
+One thing we observed is that sometimes students don't check what functions return (especially of the standard library). Functions can report failure by returning `NULL`, `-1` or some error enum. And when these functions remain unchecked, you will miss this error and become annoyed and frustrated.
 
 ### NULLing the pointer
 
-After freeing malloc pointer, it better to null it, so that pointer which might still point to valid address but have garbage value, don't get accesed. Otherwise it will introduce bug, which is hard to track down. Nulling it will give you seg fault on accessing or let `-fsanitize=undefined,address` flag help catch it.
+After freeing the malloc pointer, it is better to null it, so that pointer which might still point to a valid address but have a garbage value, doesn't get accessed. Otherwise, it will introduce a bug, which is hard to track down. Nulling it will give you seg fault on accessing or let the `-fsanitize=undefined,address` flag help catch it.
 
 ```c
 int main(void){
@@ -167,7 +165,7 @@ int main(void){
 hello world!
 ```
 
-While it might be tempting to use goto for some complex control flows, not only it's complicated jumping from here and there but also it's `fall-through` behaviour like `switch` statement, will make it really hard to be handled.
+While it might be tempting to use goto for some complex control flows, not only it's complicated jumping from here and there but also its `fall-through` behaviour like the `switch` statement, will make it hard to be handled.
 
 ```c
 int main(void){
@@ -184,7 +182,7 @@ int main(void){
 hello world! bye!
 ```
 
-So, if you absolutely have to use goto, use it as defer mechanism to handle errors. Otherwise, there might be code smell in whatever you are trying to do.
+So, only use goto as defer mechanism to handle errors. Otherwise, there might be a code smell in whatever you are trying to do.
 
 ```c
 #include<errno.h>
@@ -205,9 +203,9 @@ int main(void){
 ```
 ### Etc
 
-- Function-like macros: This should only be used if your functions are small, because macros (pre-processor) basically just do copy-paste and since pre-processor doesn't understand anything about language, it will result buggy code that is hard to debug.
+- Function-like macros: This should only be used if your functions are small because macros (pre-processor) don't understand anything about language and only copy-paste. It will result in buggy code that is hard to debug.
 
-- Variadic functions: This should be strictly avoided as it doesn't have any type-safety and this can easily break your program or introducte security vulnerability.
+- Variadic functions: This should be strictly avoided as it doesn't have any type-safety and can easily break your program or introduce security vulnerabilities.
 
 ## Compiler level
 
@@ -219,18 +217,18 @@ Use flags when compiling to catch potential bugs.
 
 (Examples are of `gcc`)
 
-- `-Wall`, enable all warning, all warning that might lead to bugs in code.
+- `-Wall`, enable all warnings, all warnings that might lead to bugs in code.
 - `-Wextra`, some extra warnings.
-- `-Werror`, treat warning as error, this is to enforce that programmer actually fix the warning and not just ignore it.
-- `-Wpendantic`, Enforce ISO C standard, make code more portable as different compiler have different implementations.
+- `-Werror`, treat warning as an error, this is to enforce that programmer fixes the warning and not just ignore it.
+- `-Wpendantic`, Enforce ISO C standard, make code more portable as different compilers have different implementations.
 - `-Wconversion`, warn when invalid conversion between int/float/double and of different size occurs.
 - `-Wshadow`, warn when variable shadows previously declared variables.
-- `-std=cxx`, uses `cxx` compiler, so that code conform to that particular ISO C standard.
+- `-std=cxx`, uses `cxx` compiler, so that code conforms to that particular ISO C standard.
 - `-fsanitize=<a>,<b>,<c>`, use santizer to catch bugs.
-    - `-fsanitize=undefined`, check for undefined behaviour.
-    - `-fsanitize=address`, check for out-of-bounds and use-after-free bugs.
-    - `-fsanitize=leak`, check for memory leaks.
-    - [more](https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html)
+- `-fsanitize=undefined`, check for undefined behaviour.
+- `-fsanitize=address`, check for out-of-bounds and use-after-free bugs.
+- `-fsanitize=leak`, check for memory leaks.
+- [more](https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html)
 
 ## Tools level
 
@@ -238,11 +236,11 @@ Use flags when compiling to catch potential bugs.
 
 ### Use debugger
 
-Beginners nowadays just use `printf` to check the code states and variable to debug their projects. The problem with this is that it hard to properly read the states and variables even if you have very pretty `printf` messages. Even if you do, you would be spending much of your time copy-pasting `printf` and editing them. This make them pretty counter-productive.
+Beginners nowadays only use `printf` to check the code states and variables to debug their projects. The problem is that it is hard to properly read the code states and variables even if you have pretty `printf` messages. Even if you do, you would be spending much of your time copy-pasting `printf` and editing them. It would make them pretty counter-productive.
 
-Beginners should try to get their hand dirty with debuggers like [gdb](https://sourceware.org/gdb/)/[lldb](https://lldb.llvm.org) even if it take some time out of their free time. Because, once you get used to debuggers, you can easily debug your code without wasting time.
+Beginners should try to get their hands dirty with debuggers like [gdb](https://sourceware.org/gdb/)/[lldb](https://lldb.llvm.org) even if it takes some time out of their free time. Because, once you get used to debuggers, you can easily debug your code without wasting time.
 
-Another amazing usecase for debugger is that you can use it to explore and get familiar with new codebase, as you can check the execution flow easily.
+Another amazing use case for a debugger is that you can use it to explore and get familiar with a new codebase, as you can check the execution flow easily.
 
 > You like printf debugging?
 >
