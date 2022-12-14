@@ -15,7 +15,7 @@ Table Of Contents:
     - [Flags](#flags)
     
 - Tools level:
-    - [Use debugger](#use-debugger)
+    - [Debugger](#debugger)
 
 ## Source code level
 
@@ -234,7 +234,7 @@ Use flags when compiling to catch potential bugs.
 
 ---
 
-### Use debugger
+### Debugger
 
 Beginners nowadays only use `printf` to check the code states and variables to debug their projects. The problem is that it is hard to properly read the code states and variables even if you have pretty `printf` messages. Even if you do, you would be spending much of your time copy-pasting `printf` and editing them. It would make them pretty counter-productive.
 
